@@ -1,8 +1,8 @@
 import styles from "./Wind.module.css";
 
 export default function Wind({ data }) {
-  const degrees = data.wind.deg; // Pega a direção na API
-  console.log(degrees);
+  const degrees = data.list[0].wind.deg; // Pega a direção na API
+
 
   // Função para determinar a direção do vento
   const getWindDirection = (degrees) => {
@@ -33,8 +33,8 @@ export default function Wind({ data }) {
     <section className={styles.wind__container}>
       <h2 className={styles.wind__title}>Wind</h2>
       <p className={styles.wind_direction}>Direction: {windDirection}</p>
-      <p className={styles.wind__speed}>Speed: {data.wind.speed} m/s</p>
-      <p className={styles.wind__gust}>Wind Gust: {data.wind.gust} m/s</p>
+      <p className={styles.wind__speed}>Speed: {data.list[0].wind.speed} m/s</p>
+      <p className={styles.wind__gust}>Wind Gust: {data.list[0].wind.gust} m/s</p>
     </section>
   );
 }
