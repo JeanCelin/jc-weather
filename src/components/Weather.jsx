@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Temp from "./Temp";
 import styles from "./Weather.module.css";
 
 export default function Weather({ data, error, loading }) {
@@ -12,17 +13,33 @@ export default function Weather({ data, error, loading }) {
 
   const timestamp = data.dt;
   const date = new Date(timestamp * 1000);
+  const day = date.getDate().toString().padStart(2, "0");
+
   console.log(date.toLocaleString("en-US"));
-  console.log(data.weather[0].id)
+  console.log(date.getDay());
+  console.log(data.weather[0].id);
+
   return (
-    <div>
-      <h1>{data.name}</h1>
-      <section>
-        <p>{date.toString()}</p>
-        <Image src={iconUrl} width={64} height={64} alt={data.weather[0].main}/>
-        <p> {data.weather[0].description}</p>
+    <div className={styles.weather__container}>
+      <h1 className={styles.weather__place}>{data.name}</h1>
+      <section className={styles.weather__content}>
+        <section className={styles.info__container}>
+          <p className={styles.info__day}>{day}</p>
+          <div className={styles.icon__container}>
+            <Image
+              src={iconUrl}
+              width={64}
+              height={64}
+              alt={data.weather[0].main}
+            />
+            <p className={styles.icon__description}>
+              {" "}
+              {data.weather[0].description}
+            </p>
+          </div>
+        </section>
+        <Temp data={data} />
       </section>
-      <p>Temperatura: {data.main.temp}°C</p>
     </div>
   );
 }

@@ -1,0 +1,25 @@
+.weather__content {
+  display: flex;
+}
+
+.info__container {
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.info__day {
+  background-color: var(--color2);
+  color: var(--color1);
+  padding: 10px;
+  border-radius: 50%;
+}
+.icon__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.icon__description {
+  text-transform: uppercase;
+}
+
