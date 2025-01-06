@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Temp from "./Temp";
+import Wind from "./Wind";
 import styles from "./Weather.module.css";
 
 export default function Weather({ data, error, loading }) {
@@ -39,7 +40,10 @@ export default function Weather({ data, error, loading }) {
           </div>
         </section>
         <Temp data={data} />
+        <Wind data={data}/>
       </section>
+
+
     </div>
   );
 }
