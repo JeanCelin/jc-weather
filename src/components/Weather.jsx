@@ -8,37 +8,61 @@ export default function Weather({ data, error, loading }) {
   if (loading) return <p>Carregando...</p>;
   if (error) return <p>Erro: {error}</p>;
 
-  console.log(data)
-  const iconCode = data.list[0].weather[0].icon;
-  const iconUrl = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
+  console.log(data);
 
-  const timestamp = data.list[0].dt;
-  const date = new Date(timestamp * 1000);
-  const day = date.getDate().toString().padStart(2, "0");
+  //Dados dos dias
+  const dataDays = data.list;
+
+  //Pega o dias de hoje
+  const today = new Date().getDate();
+
+  console.log(data.list);
+
+  //Pega os dados de cada dia e mostra de acordo
+
+  const getDay = dataDays.map((element) => {
+    const iconCode = element.weather[0].icon;
+    const iconUrl = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
+
+    const timestamp = element.dt;
+    const date = new Date(timestamp * 1000);
+    const day = date.getDate().toString().padStart(2, "0");
+
+    // verifica se o dia é igual a 6 e mostra, se não, não mostra
+    if (day == 8) {
+      return (
+        <>
+          <section className={styles.weather__content}>
+            <section className={styles.info__container}>
+              <div className={styles.icon__container}>
+                <Image
+                  src={iconUrl}
+                  width={64}
+                  height={64}
+                  alt={element.weather[0].main}
+                />
+                <p className={styles.icon__description}>
+                  {element.weather[0].description}
+                </p>
+              </div>
+            </section>
+            <section className={styles.weather__info}>
+              <Temp data={data} />
+              <Wind data={data} />
+            </section>
+          </section>
+        </>
+      );
+    }
+  });
 
   return (
     <div className={styles.weather__container}>
       <h1 className={styles.weather__place}>{data.city.name}</h1>
-      <section className={styles.weather__content}>
-        <section className={styles.info__container}>
-          <p className={styles.info__day}>{day}</p>
-          <div className={styles.icon__container}>
-            <Image
-              src={iconUrl}
-              width={64}
-              height={64}
-              alt={data.list[0].weather[0].main}
-            />
-            <p className={styles.icon__description}>
-              {data.list[0].weather[0].description}
-            </p>
-          </div>
-        </section>
-        <Temp data={data} />
-        <Wind data={data}/>
-      </section>
-
-
+      <div className={styles.weather__status}>
+        <p className={styles.weather__day}>{today}</p>
+        {getDay}
+      </div>
     </div>
   );
 }
