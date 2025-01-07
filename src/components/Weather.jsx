@@ -21,13 +21,19 @@ export default function Weather({ data, error, loading }) {
   const hour = today.getHours().toString().padStart(2, "0");
 
   //Pega os dados de cada dia e mostra de acordo
-  const [temp, setTemp] = useState({});
-  const [wind, setWind] = useState({});
-  const [showTemp, setShowTemp] = useState(false);
+
+  //
+  const [temp, setTemp] = useState(data.list[0].main);
+  const [wind, setWind] = useState(data.list[0].wind);
+  const [showTemp, setShowTemp] = useState(true);
   const handleInfo = (temp, wind) => {
-    setTemp(temp);
-    setWind(wind);
-    setShowTemp(true);
+    try{
+      setTemp(temp);
+      setWind(wind);
+      setShowTemp(true);
+    } catch{
+      <p>Algo de errado</p>
+    }
   };
 
   const getDay = dataElements.map((element, index) => {
@@ -43,6 +49,9 @@ export default function Weather({ data, error, loading }) {
     const elementFormattedTime = `${elementHour}:${elementMinutes}`;
     // verifica se o dia do elemento é igual ao dia atual e se a hora atual é menor do que a do elemento e mostra se verdadeiro
 
+    // chance de chuva
+    const precipitation = (Number(element.pop) * 100).toFixed(2);
+    
     if (elementDay == day && hour < elementHour) {
       return (
         <>
@@ -62,6 +71,15 @@ export default function Weather({ data, error, loading }) {
                 <p className={styles.icon__description}>
                   {element.weather[0].description}
                 </p>
+                <div className={styles.info__precipitation}>
+                  <Image
+                    src={"/water_drop.png"}
+                    width={16}
+                    height={16}
+                    alt="water drop"
+                  />
+                  <p>{precipitation} %</p>
+                </div>
               </div>
             </section>
           </section>

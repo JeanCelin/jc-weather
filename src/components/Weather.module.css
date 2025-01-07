@@ -24,8 +24,9 @@
   margin: 0 20px;
 }
 .weather__info {
+  margin: 30px;
   display: flex;
-  justify-content: space-evenly;
+  gap: 30px;
 }
 
 .info__container {
@@ -36,6 +37,12 @@
   display: flex;
   justify-content: center;
   gap: 20px;
+}
+.info__precipitation {
+  padding-top: 10px;
+  display: flex;
+  align-items: center;
+  font-size: 0.9em;
 }
 
 .icon__container {
