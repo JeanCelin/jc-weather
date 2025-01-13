@@ -5,10 +5,15 @@
 }
 .city__title {
   font-size: 1.2em;
-  padding-bottom: 5px;
+  padding-bottom: 10px;
 }
 .city__info {
   display: flex;
   flex-direction: column;
+  gap: 5px;
+}
+.city__group {
+  display: flex;
+  align-items: center;
   gap: 5px;
 }

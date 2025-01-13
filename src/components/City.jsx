@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import styles from "./City.module.css";
+
 export default function Sun({ data }) {
   console.log(data);
 
@@ -18,7 +20,7 @@ export default function Sun({ data }) {
     const sunRiseMinute = sunRiseDate.getMinutes().toString().padStart(2, "0");
     setSunrise(getHourFormt(sunRiseHour, sunRiseMinute));
   };
- //Transforma o timestamp do sunsetTime em formato de data/hora/minuito
+  //Transforma o timestamp do sunsetTime em formato de data/hora/minuito
   const sunsetTime = () => {
     const sunsetDate = new Date(data.sunset * 1000);
     const sunsetHour = sunsetDate.getHours().toString().padStart(2, "0");
@@ -36,11 +38,22 @@ export default function Sun({ data }) {
 
   return (
     <section className={styles.city__container}>
-      <h2 className={styles.city__title}>City:</h2>
+      <h2 className={styles.city__title}>City</h2>
       <div className={styles.city__info}>
         <p>Polulation: {data.population}</p>
-        <p>{`Sunrise: ${sunrise} (Horário de Brasília)`}</p>
-        <p>{`Sunset: ${sunset} (Horário de Brasília)`}</p>
+        <div className={styles.city__group}>
+          <Image src={"/sunset.png"} width={16} height={16} alt="sunset icon" />
+          <p>{`Sunset: ${sunset} (Horário de Brasília)`}</p>
+        </div>
+        <div className={styles.city__group}>
+          <Image
+            src={"/sunrise.png"}
+            width={16}
+            height={16}
+            alt="sunrise icon"
+          />
+          <p>{`Sunrise: ${sunrise} (Horário de Brasília)`}</p>
+        </div>
       </div>
     </section>
   );
