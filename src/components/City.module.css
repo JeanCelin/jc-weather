@@ -1,0 +1,14 @@
+.city__container {
+  font-size: 0.8em;
+  padding: 5px;
+  border-left: 1px solid var(--color3);
+}
+.city__title {
+  font-size: 1.2em;
+  padding-bottom: 5px;
+}
+.city__info {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}

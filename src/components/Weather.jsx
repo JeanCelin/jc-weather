@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Temp from "./Temp";
 import Wind from "./Wind";
 import styles from "./Weather.module.css";
+import Sun from "./City";
 
 export default function Weather({ data, error, loading }) {
   //Testa a requisição e retorna se der erro
@@ -21,18 +22,22 @@ export default function Weather({ data, error, loading }) {
   const hour = today.getHours().toString().padStart(2, "0");
 
   //Pega os dados de cada dia e mostra de acordo
-
-  //
   const [temp, setTemp] = useState(data.list[0].main);
   const [wind, setWind] = useState(data.list[0].wind);
+  const [city, setCity] = useState(data.city);
   const [showTemp, setShowTemp] = useState(true);
+
+  useEffect(()=>{
+    setCity(data.city)
+  },[data])
+  //Quando o elemento é clicado, passa as informações para os componentes filhos
   const handleInfo = (temp, wind) => {
-    try{
+    try {
       setTemp(temp);
       setWind(wind);
       setShowTemp(true);
-    } catch{
-      <p>Algo de errado</p>
+    } catch {
+      <p>Algo de errado</p>;
     }
   };
 
@@ -51,7 +56,7 @@ export default function Weather({ data, error, loading }) {
 
     // chance de chuva
     const precipitation = (Number(element.pop) * 100).toFixed(2);
-    
+
     if (elementDay == day && hour < elementHour) {
       return (
         <>
@@ -100,6 +105,7 @@ export default function Weather({ data, error, loading }) {
           <>
             <Temp data={temp} />
             <Wind data={wind} />
+            <Sun data={city} />
           </>
         )}
       </section>

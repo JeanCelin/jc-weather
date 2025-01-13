@@ -4,10 +4,10 @@ import styles from "./Wind.module.css";
 
 export default function Wind({ data }) {
   const degrees = data.deg; // Pega a direção na API
-  const [imgSrc, setImgSrc] = useState("");
+  const [imgSrc, setImgSrc] = useState("/compass-rose/north.png");
   const [windDirection, setWindDirection] = useState("Loading...");
 
-  // Função para determinar a direção do vento
+  // Função para determinar a direção do vento e o icone correspondente
   const getWindDirection = (degrees) => {
     if (degrees >= 337.5 || degrees < 22.5) {
       setWindDirection("North (N)");
@@ -37,8 +37,8 @@ export default function Wind({ data }) {
       setWindDirection("Something went wrong");
     }
   };
-  // Determina a direção do vento com base no grau
 
+  // Determina a direção do vento com base no grau
   useEffect(() => {
     getWindDirection(degrees);
   }, [degrees]);
