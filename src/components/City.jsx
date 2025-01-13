@@ -42,10 +42,6 @@ export default function Sun({ data }) {
       <div className={styles.city__info}>
         <p>Polulation: {data.population}</p>
         <div className={styles.city__group}>
-          <Image src={"/sunset.png"} width={16} height={16} alt="sunset icon" />
-          <p>{`Sunset: ${sunset} (Horário de Brasília)`}</p>
-        </div>
-        <div className={styles.city__group}>
           <Image
             src={"/sunrise.png"}
             width={16}
@@ -53,6 +49,10 @@ export default function Sun({ data }) {
             alt="sunrise icon"
           />
           <p>{`Sunrise: ${sunrise} (Horário de Brasília)`}</p>
+        </div>
+        <div className={styles.city__group}>
+          <Image src={"/sunset.png"} width={16} height={16} alt="sunset icon" />
+          <p>{`Sunset: ${sunset} (Horário de Brasília)`}</p>
         </div>
       </div>
     </section>

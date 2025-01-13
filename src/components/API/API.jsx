@@ -14,7 +14,7 @@ export default function API() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `https://api.openweathermap.org/data/2.5/forecast?lat=-15.78&lon=-47.92&appid=${apiKey}&units=metric`
+          `https://api.openweathermap.org/data/2.5/forecast?lat=-20.60&lon=-41.20&appid=${apiKey}&units=metric`
         );
         setData(response.data);
       } catch (err) {

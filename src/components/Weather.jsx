@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import styles from "./Weather.module.css";
 import Temp from "./Temp";
 import Wind from "./Wind";
-import styles from "./Weather.module.css";
 import Sun from "./City";
+import WeatherConditions from "./WeatherConditions";
 
 export default function Weather({ data, error, loading }) {
   //Testa a requisição e retorna se der erro
@@ -25,17 +26,25 @@ export default function Weather({ data, error, loading }) {
   const [temp, setTemp] = useState(data.list[0].main);
   const [wind, setWind] = useState(data.list[0].wind);
   const [city, setCity] = useState(data.city);
+  const [rain, setRain] = useState(data.list[0].rain);
+  const [snow, setSnow] = useState(data.snow);
+  const [cloudness, setCloudness] = useState(data.list[0].clouds.all)
+  const [visibility, setVisibility] = useState(data.list[0].visibility);
   const [showTemp, setShowTemp] = useState(true);
 
-  useEffect(()=>{
-    setCity(data.city)
-  },[data])
+  useEffect(() => {
+    setCity(data.city);
+  }, [data]);
   //Quando o elemento é clicado, passa as informações para os componentes filhos
-  const handleInfo = (temp, wind) => {
+  const handleInfo = (temp, wind, rain, snow, visibility, cloudness) => {
     try {
       setTemp(temp);
       setWind(wind);
       setShowTemp(true);
+      setRain(rain);
+      setSnow(snow);
+      setCloudness(cloudness)
+      setVisibility(visibility);
     } catch {
       <p>Algo de errado</p>;
     }
@@ -63,7 +72,16 @@ export default function Weather({ data, error, loading }) {
           <section
             className={styles.weather__content}
             key={index}
-            onClick={() => handleInfo(element.main, element.wind)}>
+            onClick={() =>
+              handleInfo(
+                element.main,
+                element.wind,
+                element.rain,
+                element.snow,
+                element.visibility,
+                element.clouds.cloudness
+              )
+            }>
             <section className={styles.info__container}>
               <div className={styles.icon__container}>
                 <p>{elementFormattedTime}</p>
@@ -106,6 +124,12 @@ export default function Weather({ data, error, loading }) {
             <Temp data={temp} />
             <Wind data={wind} />
             <Sun data={city} />
+            <WeatherConditions
+              rain={rain}
+              snow={snow}
+              visibility={visibility}
+              cloudness={cloudness}
+            />
           </>
         )}
       </section>
