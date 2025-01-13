@@ -1,40 +1,76 @@
+import { useEffect, useState } from "react";
+import Image from "next/image";
 import styles from "./Wind.module.css";
 
 export default function Wind({ data }) {
   const degrees = data.deg; // Pega a direção na API
-
+  const [imgSrc, setImgSrc] = useState("");
+  const [windDirection, setWindDirection] = useState("Loading...");
 
   // Função para determinar a direção do vento
   const getWindDirection = (degrees) => {
     if (degrees >= 337.5 || degrees < 22.5) {
-      return "North (N)";
+      setWindDirection("North (N)");
+      setImgSrc("/compass-rose/north.png");
     } else if (degrees >= 22.5 && degrees < 67.5) {
-      return "Northeast (NE)";
+      setWindDirection("Northeast (NE)");
+      setImgSrc("/compass-rose/north_east.png");
     } else if (degrees >= 67.5 && degrees < 112.5) {
-      return "East (E)";
+      setWindDirection("East (E)");
+      setImgSrc("/compass-rose/east.png");
     } else if (degrees >= 112.5 && degrees < 157.5) {
-      return "Southeast (SE)";
+      setWindDirection("Southeast (SE)");
+      setImgSrc("/compass-rose/south_east.png");
     } else if (degrees >= 157.5 && degrees < 202.5) {
-      return "South (S)";
+      setWindDirection("South (S)");
+      setImgSrc("/compass-rose/south.png");
     } else if (degrees >= 202.5 && degrees < 247.5) {
-      return "Southwest (SW)";
+      setWindDirection("Southwest (SW)");
+      setImgSrc("/compass-rose/south_west.png");
     } else if (degrees >= 247.5 && degrees < 292.5) {
-      return "West (W)";
+      setWindDirection("West (W)");
+      setImgSrc("/compass-rose/west.png");
     } else if (degrees >= 292.5 && degrees < 337.5) {
-      return "Northwest (NW)";
+      setWindDirection("Northwest (NW)");
+      setImgSrc("/compass-rose/north_west.png");
     } else {
-      return "Something went wrong";
+      setWindDirection("Something went wrong");
     }
   };
   // Determina a direção do vento com base no grau
-  const windDirection = getWindDirection(degrees);
+
+  useEffect(() => {
+    getWindDirection(degrees);
+  }, [degrees]);
 
   return (
     <section className={styles.wind__container}>
       <h2 className={styles.wind__title}>Wind</h2>
-      <p className={styles.wind_direction}>Direction: {windDirection}</p>
-      <p className={styles.wind__speed}>Speed: {data.speed} m/s</p>
-      <p className={styles.wind__gust}>Wind Gust: {data.gust} m/s</p>
+      <div className={styles.wind__directionContainer}>
+        <div className={styles.wind__direction}>
+          Direction:{" "}
+          <Image
+            src={imgSrc}
+            width={16}
+            height={16}
+            alt="wind direction icon"
+          />
+          {windDirection}
+        </div>{" "}
+      </div>
+      <div className={styles.wind__direction}>
+        <Image src={"/air.png"} width={16} height={16} alt="wind icon" />
+        <p className={styles.wind__speed}>Speed: {data.speed} m/s</p>
+      </div>
+      <div className={styles.wind__direction}>
+        <Image
+          src={"/wind_power.png"}
+          width={16}
+          height={16}
+          alt="wind power icon"
+        />
+        <p className={styles.wind__gust}>Wind Gust: {data.gust} m/s</p>
+      </div>
     </section>
   );
 }
