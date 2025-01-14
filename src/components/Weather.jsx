@@ -5,6 +5,7 @@ import Temp from "./Temp";
 import Wind from "./Wind";
 import Sun from "./City";
 import WeatherConditions from "./WeatherConditions";
+import Forecast from "./Forecast";
 
 export default function Weather({ data, error, loading }) {
   //Testa a requisição e retorna se der erro
@@ -131,6 +132,9 @@ export default function Weather({ data, error, loading }) {
             />
           </>
         )}
+      </section>
+      <section>
+        <Forecast data={data}/>
       </section>
     </div>
   );

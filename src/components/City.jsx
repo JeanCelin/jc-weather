@@ -3,7 +3,6 @@ import Image from "next/image";
 import styles from "./City.module.css";
 
 export default function Sun({ data }) {
-  console.log(data);
 
   const [sunrise, setSunrise] = useState(null);
   const [sunset, setSunset] = useState(null);
@@ -18,7 +17,7 @@ export default function Sun({ data }) {
   
   useEffect(() => {
     try {
-      if (data.sunris !== undefined && data.sunset !== undefined) {
+      if (data.sunrise !== undefined && data.sunset !== undefined) {
         setSunrise(getTime(data.sunrise, "Sunrise"));
         setSunset(getTime(data.sunset, "Sunset"));
       } else {

@@ -31,12 +31,9 @@
 
 .info__container {
   padding: 10px;
-  margin: 0 30px;
-  min-width: 200px;
-
+  min-width: 120px;
   display: flex;
   justify-content: center;
-  gap: 20px;
 }
 .info__precipitation {
   padding-top: 10px;
@@ -55,4 +52,3 @@
   text-transform: uppercase;
   text-align: center;
 }
-
