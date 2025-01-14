@@ -1,37 +1,28 @@
 import { useEffect, useState } from "react";
 import styles from "./WeatherConditions.module.css";
 
-export default function WeatherConditions({
-  rain,
-  snow,
-  visibility,
-  cloudness,
-}) {
-  const [isRain, setisRain] = useState(false);
+export default function WeatherConditions({ rain, snow, visibility, cloudness }) {
+  const [isRain, setIsRain] = useState(false);
   const [isSnow, setIsSnow] = useState(false);
   const [isVisibility, setIsVisibility] = useState(false);
   const [isCloudness, setIsCloudness] = useState(false);
 
-  useEffect(() => {
-    try {
-      if (rain) {
-        setisRain(true);
-      }
-      if (snow) {
-        setIsSnow(true);
-      }
-      if (visibility) {
-        setIsVisibility(true);
-      }
-      if (cloudness) {
-        setIsCloudness(true);
-      }
-    } catch {
-      console.log("sem dados");
+  // Atualiza o estado com base no valor fornecido
+  const updateConditionState = (name, value, setState) => {
+    if (value) {
+      setState(true);
+    } else {
+      console.log(`${name} not found. Hiding...`);
     }
-    console.log(rain);
-    console.log(snow);
-  }, [rain, snow, visibility]);
+  };
+
+  useEffect(() => {
+    updateConditionState("rain", rain, setIsRain);
+    updateConditionState("snow", snow, setIsSnow);
+    updateConditionState("visibility", visibility, setIsVisibility);
+    updateConditionState("cloudness", cloudness, setIsCloudness);
+  }, [rain, snow, visibility, cloudness]);
+
   return (
     <section className={styles.weatherConditions__container}>
       <h2 className={styles.weatherConditions__title}>Weather Conditions</h2>

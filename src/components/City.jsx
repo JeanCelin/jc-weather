@@ -33,7 +33,7 @@ export default function Sun({ data }) {
       sunriseTime();
       sunsetTime();
     },
-    { data }
+    [data]
   );
 
   return (

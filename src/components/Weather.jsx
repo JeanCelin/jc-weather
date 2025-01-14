@@ -28,7 +28,7 @@ export default function Weather({ data, error, loading }) {
   const [city, setCity] = useState(data.city);
   const [rain, setRain] = useState(data.list[0].rain);
   const [snow, setSnow] = useState(data.snow);
-  const [cloudness, setCloudness] = useState(data.list[0].clouds.all)
+  const [cloudness, setCloudness] = useState(data.list[0].clouds.all);
   const [visibility, setVisibility] = useState(data.list[0].visibility);
   const [showTemp, setShowTemp] = useState(true);
 
@@ -43,7 +43,7 @@ export default function Weather({ data, error, loading }) {
       setShowTemp(true);
       setRain(rain);
       setSnow(snow);
-      setCloudness(cloudness)
+      setCloudness(cloudness);
       setVisibility(visibility);
     } catch {
       <p>Algo de errado</p>;
@@ -68,10 +68,9 @@ export default function Weather({ data, error, loading }) {
 
     if (elementDay == day && hour < elementHour) {
       return (
-        <>
+        <div key={index}>
           <section
             className={styles.weather__content}
-            key={index}
             onClick={() =>
               handleInfo(
                 element.main,
@@ -106,7 +105,7 @@ export default function Weather({ data, error, loading }) {
               </div>
             </section>
           </section>
-        </>
+        </div>
       );
     }
   });
