@@ -2,7 +2,6 @@ import Image from "next/image";
 import styles from "./Temp.module.css";
 
 export default function Temp({ data }) {
-  console.log(data);
   return (
     <section className={styles.temp__container}>
       <h2 className={styles.temp__title}>Temperature</h2>

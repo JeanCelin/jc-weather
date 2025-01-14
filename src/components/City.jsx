@@ -5,36 +5,31 @@ import styles from "./City.module.css";
 export default function Sun({ data }) {
   console.log(data);
 
-  const [sunrise, setSunrise] = useState();
-  const [sunset, setSunset] = useState();
+  const [sunrise, setSunrise] = useState(null);
+  const [sunset, setSunset] = useState(null);
 
-  //Formata os dados em um horario
-  const getHourFormt = (hour, minute) => {
-    return `${hour}:${minute}`;
+  //Transforma o timestamp em formato de hora:minuito
+  const getTime = (value, name) => {
+    const date = new Date(value * 1000);
+    const hour = date.getHours().toString().padStart(2, "0");
+    const minute = date.getMinutes().toString().padStart(2, "0");
+    return `${name}: ${hour}:${minute} (Horário de Brasília)`;
   };
-
-  //Transforma o timestamp do sunriseTime em formato de data/hora/minuito
-  const sunriseTime = () => {
-    const sunRiseDate = new Date(data.sunrise * 1000);
-    const sunRiseHour = sunRiseDate.getHours().toString().padStart(2, "0");
-    const sunRiseMinute = sunRiseDate.getMinutes().toString().padStart(2, "0");
-    setSunrise(getHourFormt(sunRiseHour, sunRiseMinute));
-  };
-  //Transforma o timestamp do sunsetTime em formato de data/hora/minuito
-  const sunsetTime = () => {
-    const sunsetDate = new Date(data.sunset * 1000);
-    const sunsetHour = sunsetDate.getHours().toString().padStart(2, "0");
-    const sunsetMinute = sunsetDate.getMinutes().toString().padStart(2, "0");
-    setSunset(getHourFormt(sunsetHour, sunsetMinute));
-  };
-
-  useEffect(
-    () => {
-      sunriseTime();
-      sunsetTime();
-    },
-    [data]
-  );
+  
+  useEffect(() => {
+    try {
+      if (data.sunris !== undefined && data.sunset !== undefined) {
+        setSunrise(getTime(data.sunrise, "Sunrise"));
+        setSunset(getTime(data.sunset, "Sunset"));
+      } else {
+        setSunrise("00:00");
+        setSunset("00:00");
+        console.error("Dados não encontrados");
+      }
+    } catch (error) {
+      console.error("Erro ao calcular os horários do sol:", error);
+    }
+  }, [data]);
 
   return (
     <section className={styles.city__container}>
@@ -48,11 +43,11 @@ export default function Sun({ data }) {
             height={16}
             alt="sunrise icon"
           />
-          <p>{`Sunrise: ${sunrise} (Horário de Brasília)`}</p>
+          <p>{sunrise}</p>
         </div>
         <div className={styles.city__group}>
           <Image src={"/sunset.png"} width={16} height={16} alt="sunset icon" />
-          <p>{`Sunset: ${sunset} (Horário de Brasília)`}</p>
+          <p>{sunset}</p>
         </div>
       </div>
     </section>
