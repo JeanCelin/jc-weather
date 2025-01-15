@@ -1,0 +1,27 @@
+.forecast__container {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+.forecast__day {
+  flex: 0 0 40px;
+
+  background-color: var(--color2);
+  color: var(--color1);
+  border-radius: 50%;
+  text-align: center;
+  line-height: 40px;
+  margin: 0 20px;
+}
+.forecast__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  min-height: 100px;
+}
+
+.forecast__iconDescription {
+  font-size: 0.9em;
+  text-transform: uppercase;
+}
