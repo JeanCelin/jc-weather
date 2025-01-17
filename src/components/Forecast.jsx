@@ -4,8 +4,6 @@ import styles from "./Forecast.module.css";
 
 export default function Forecast({ data, days = 3, updateStates }) {
   const itens = data.list;
-  const today = new Date();
-  const day = parseInt(today.getDate().toString().padStart(2, "0"));
   const [forecast, setForecast] = useState();
   const [group, setGroup] = useState([]);
 

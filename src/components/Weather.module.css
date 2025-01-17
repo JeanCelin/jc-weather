@@ -5,8 +5,30 @@
   padding: 25px 50px;
 
   gap: 25px;
-}
+  border: 1px solid black;
 
+  position: relative;
+}
+.weather__plus {
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+  padding: 1px;
+
+  width: 40px;
+  height: 40px;
+
+  background-color: var(--color2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.weather__plus:hover {
+  background-color: var(--color3);
+  transition: ease-in 300ms;
+}
 .weather__info {
   margin: 30px;
   display: flex;

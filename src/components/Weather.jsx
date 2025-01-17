@@ -13,7 +13,7 @@ export default function Weather({ data, error, loading }) {
   if (error) return <p>Erro: {error}</p>;
 
   console.log(data);
-
+  const [showDays, setShowDays] = useState(3);
   const [city, setCity] = useState(data.city);
   const [temp, setTemp] = useState(data.list[0].main);
   const [wind, setWind] = useState(data.list[0].wind);
@@ -38,13 +38,31 @@ export default function Weather({ data, error, loading }) {
     setCity(data.city);
   }, [data]);
 
+  //Verifica se os dias exibidos são 3 se não ao clicar exibe 5 e vise-versa 
+  const handlePlusClick = () => {
+    showDays === 3 ? setShowDays(5) : setShowDays(3);
+  };
   //Informações do tempo(cronológico) atual
   return (
     <div className={styles.weather__container}>
       <h1 className={styles.weather__place}>{data.city.name}</h1>
       <div className={styles.weather__status}>
-        <Forecast data={data} updateStates={updateStates} />
+        <Forecast data={data} days={showDays} updateStates={updateStates} />
+        <div
+          className={styles.weather__plus}
+          onClick={() => {
+            handlePlusClick();
+          }}>
+          <Image
+            className={styles.weather__plusIcon}
+            src="/add.png"
+            width={30}
+            height={30}
+            alt="add icon"
+          />
+        </div>
       </div>
+
       <section className={styles.weather__info}>
         {showTemp && (
           <>
