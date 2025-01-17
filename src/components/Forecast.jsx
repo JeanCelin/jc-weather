@@ -10,7 +10,9 @@ export default function Forecast({ data, days = 3, updateStates }) {
   const [group, setGroup] = useState([]);
 
   const handleInfo = (temp, wind, rain, snow, visibility, cloudness) => {
-    updateStates(temp, wind, rain, snow, visibility, cloudness);
+    if ((temp, wind, rain, snow, visibility, cloudness)) {
+      updateStates(temp, wind, rain, snow, visibility, cloudness);
+    }
     console.log(
       "Info clicked!",
       temp,
@@ -87,7 +89,7 @@ export default function Forecast({ data, days = 3, updateStates }) {
                 handleInfo(
                   element.main,
                   element.wind,
-                  element.rain,
+                  element.rain?.["3h"] || 0,
                   element.snow,
                   element.visibility,
                   element.clouds.all

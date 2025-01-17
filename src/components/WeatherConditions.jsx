@@ -7,6 +7,7 @@ export default function WeatherConditions({
   visibility,
   cloudness,
 }) {
+  console.log(rain);
   const [isRain, setIsRain] = useState(false);
   const [isSnow, setIsSnow] = useState(false);
   const [isVisibility, setIsVisibility] = useState(false);
