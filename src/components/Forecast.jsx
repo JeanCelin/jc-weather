@@ -82,7 +82,7 @@ export default function Forecast({ data, days = 3, updateStates }) {
           const precipitation = (Number(element.pop) * 100).toFixed(2);
 
           return (
-            <section
+            <div
               className={styles.forecast__content}
               key={index}
               onClick={() =>
@@ -105,24 +105,24 @@ export default function Forecast({ data, days = 3, updateStates }) {
               <p className={styles.forecast__iconDescription}>
                 {element.weather[0].description}
               </p>
-              <div className={styles.info__precipitation}>
+              <div className={styles.forecast__precipitation}>
                 <Image
                   src={"/water_drop.png"}
                   width={16}
                   height={16}
                   alt="water drop"
                 />
-                <p>{precipitation} %</p>
+                <p>{precipitation}%</p>
               </div>
-            </section>
+            </div>
           );
         });
         console.log(forecasts);
 
         return (
           <section className={styles.forecast__container} key={index}>
-            <div className={styles.forecast__day}>{day}</div>
-            {forecasts}
+            <section className={styles.forecast__day}>{day}</section>
+            <section className={styles.forecast__elements}>{forecasts}</section>
           </section>
         );
       })
