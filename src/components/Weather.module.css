@@ -1,4 +1,8 @@
+.weather__forecast {
+  display: flex;
+}
 .weather__status {
+  max-width: 1000px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -9,6 +13,14 @@
 
   position: relative;
 }
+.weather__info {
+  display: flex;
+  flex-direction: column;
+
+  margin: 30px;
+  gap: 30px;
+}
+
 .weather__plus {
   position: absolute;
   bottom: -20px;
@@ -28,9 +40,4 @@
 .weather__plus:hover {
   background-color: var(--color3);
   transition: ease-in 300ms;
-}
-.weather__info {
-  margin: 30px;
-  display: flex;
-  gap: 30px;
 }

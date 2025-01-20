@@ -7,7 +7,6 @@ export default function WeatherConditions({
   visibility,
   cloudness,
 }) {
-  console.log(rain);
   const [isRain, setIsRain] = useState(false);
   const [isSnow, setIsSnow] = useState(false);
   const [isVisibility, setIsVisibility] = useState(false);
@@ -29,7 +28,7 @@ export default function WeatherConditions({
 
   return (
     <section className={styles.weatherConditions__container}>
-      <h2 className={styles.weatherConditions__title}>Weather Conditions</h2>
+      <h3 className={styles.weatherConditions__title}>Weather Conditions</h3>
       {isRain && <p>{`Rain vol for last 3h: ${rain} mm`}</p>}
       {isSnow && <p>{`Snow vol for last 3h: ${snow} mm`}</p>}
       {isVisibility && <p>{`Visibility: ${visibility} metres`}</p>}

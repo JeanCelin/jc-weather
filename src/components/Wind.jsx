@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import styles from "./Wind.module.css";
 
-export default function Wind({ data }) {
-  const degrees = data.deg; // Pega a direção na API
+export default function Wind({ windWeatherData }) {
+
+  const degrees = windWeatherData.deg; // Pega a direção na API
   const [imgSrc, setImgSrc] = useState("/compass-rose/north.png");
   const [windDirection, setWindDirection] = useState("Loading...");
 
@@ -45,7 +46,7 @@ export default function Wind({ data }) {
 
   return (
     <section className={styles.wind__container}>
-      <h2 className={styles.wind__title}>Wind</h2>
+      <h3 className={styles.wind__title}>Wind</h3>
       <div className={styles.wind__directionContainer}>
         <div className={styles.wind__direction}>
           Direction:{" "}
@@ -60,7 +61,7 @@ export default function Wind({ data }) {
       </div>
       <div className={styles.wind__direction}>
         <Image src={"/air.png"} width={16} height={16} alt="wind icon" />
-        <p className={styles.wind__speed}>Speed: {data.speed} m/s</p>
+        <p className={styles.wind__speed}>Speed: {windWeatherData.speed} m/s</p>
       </div>
       <div className={styles.wind__direction}>
         <Image
@@ -69,7 +70,7 @@ export default function Wind({ data }) {
           height={16}
           alt="wind power icon"
         />
-        <p className={styles.wind__gust}>Wind Gust: {data.gust} m/s</p>
+        <p className={styles.wind__gust}>Wind Gust: {windWeatherData.gust} m/s</p>
       </div>
     </section>
   );

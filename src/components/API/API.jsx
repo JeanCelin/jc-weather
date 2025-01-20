@@ -4,8 +4,8 @@ import Weather from "@/components/Weather";
 
 export default function API() {
   const [data, setData] = useState(null);
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   const apiKey = process.env.NEXT_PUBLIC_API_KEY;
 
@@ -18,15 +18,15 @@ export default function API() {
         );
         setData(response.data);
       } catch (err) {
-        setError("Bad request :(");
+        setErrorMessage("Bad request :(");
         console.error(err);
       } finally {
-        setLoading(false);
+        setIsLoading(false);
       }
     };
 
     fetchData();
   }, []);
 
-  return <Weather data={data} error={error} loading={loading} />;
+  return <Weather data={data} errorMessage={errorMessage} isLoading={isLoading} />;
 }
