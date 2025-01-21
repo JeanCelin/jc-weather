@@ -5,7 +5,7 @@ import Temp from "./Temp";
 import Wind from "./Wind";
 import City from "./City";
 import WeatherConditions from "./WeatherConditions";
-import DailyForecasts from "./DailyForecasts";
+import Forecast from "./Forecast";
 
 export default function Weather({ data, errorMessage, isLoading }) {
   //Testa a requisição e retorforecastDaysCountna se der erro
@@ -53,7 +53,9 @@ export default function Weather({ data, errorMessage, isLoading }) {
       <h1 className={styles.weather__place}>{data.city.name}</h1>
       <div className={styles.weather__forecast}>
         <section className={styles.weather__status}>
-          <DailyForecasts
+          {/* Inserir o CurrentWeather Aqui! */}
+         
+          <Forecast
             data={data}
             days={forecastDaysCount}
             updateWeatherDetails={updateWeatherDetails}

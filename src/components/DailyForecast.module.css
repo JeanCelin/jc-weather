@@ -1,0 +1,29 @@
+.dataDaily__container {
+  display: flex;
+  align-items: center;
+}
+.dataDaily__descriptionContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  text-transform: uppercase;
+}
+.dataDaily__tempContainer {
+  display: flex;
+  flex-direction: column;
+
+}
+.dataDaily__temp {
+  display: flex;
+  gap: 10px;
+}
+.dataDaily__tempVariationContainer {
+  display: flex;
+  flex-direction: column;
+}
+.dataDaily__tempVariation {
+  display: flex;
+  align-items: center;
+}

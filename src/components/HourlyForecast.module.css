@@ -1,0 +1,22 @@
+
+.formattedIcons__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  min-width: 150px;
+  min-height: 100px;
+
+  cursor: pointer;
+}
+
+.formattedIcons__iconDescription {
+  font-size: 0.9em;
+  text-transform: uppercase;
+}
+
+.formattedIcons__precipitation{
+  display: flex;
+  padding-top: 5px;
+  align-items: center;
+}

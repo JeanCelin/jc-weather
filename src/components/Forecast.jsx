@@ -1,10 +1,17 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import styles from "./DailyForecasts.module.css";
+import styles from "./Forecast.module.css";
+import HourlyForecast from "./HourlyForecast";
+import DailyForecast from "./DailyForecast";
 
-export default function DailyForecasts({ data, days = 3, updateWeatherDetails }) {
+export default function DailyForecasts({
+  data,
+  days = 3,
+  updateWeatherDetails,
+}) {
+  console.log(data);
   const weatherData = data.list;
-  const [dailyForecasts, setDailyForecasts] = useState();
+  const [forecast, setForecast] = useState();
   const [groupedWeatherData, setGroupedWeatherData] = useState([]);
 
   const handleWeatherInfo = (temp, wind, rain, snow, visibility, cloudness) => {
@@ -18,7 +25,9 @@ export default function DailyForecasts({ data, days = 3, updateWeatherDetails })
     weatherData.forEach((element) => {
       const elementTimestamp = element.dt;
       const elementDate = new Date(elementTimestamp * 1000);
-      const elementDay = parseInt(elementDate.getDate().toString().padStart(2, "0"));
+      const elementDay = parseInt(
+        elementDate.getDate().toString().padStart(2, "0")
+      );
       if (!groupedWeatherByDay[elementDay]) {
         groupedWeatherByDay[elementDay] = [];
       }
@@ -42,16 +51,17 @@ export default function DailyForecasts({ data, days = 3, updateWeatherDetails })
     const selectedDaysForecast = groupedWeatherData.slice(0, days);
 
     // Transforma os itens em formato HTML para exibir no site
-    setDailyForecasts(
+    setForecast(
       selectedDaysForecast.map((element, index) => {
         const day = element.day;
         const elements = element.elements;
 
-        let hourlyForecasts = elements.map((element, index) => {
+        //Previsão por horario
+        let forecast = elements.map((element, index) => {
           const elementTimestamp = element.dt;
           const elementDate = new Date(elementTimestamp * 1000);
           const iconCode = element.weather[0].icon;
-          const iconUrl = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
+          const iconSrc = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
           const elementHour = elementDate
             .getHours()
             .toString()
@@ -65,7 +75,6 @@ export default function DailyForecasts({ data, days = 3, updateWeatherDetails })
 
           return (
             <div
-              className={styles.forecast__content}
               key={index}
               onClick={() =>
                 handleWeatherInfo(
@@ -77,38 +86,35 @@ export default function DailyForecasts({ data, days = 3, updateWeatherDetails })
                   element.clouds.all
                 )
               }>
-              <p>{elementFormattedTime}</p>
-              <Image
-                src={iconUrl}
-                width={64}
-                height={64}
+              <HourlyForecast
+                selectedDaysForecast={selectedDaysForecast}
+                time={elementFormattedTime}
+                iconSrc={iconSrc}
                 alt={element.weather[0].main}
+                weatherDescription={element.weather[0].description}
+                precipitation={precipitation}
               />
-              <p className={styles.forecast__iconDescription}>
-                {element.weather[0].description}
-              </p>
-              <div className={styles.forecast__precipitation}>
-                <Image
-                  src={"/water_drop.png"}
-                  width={16}
-                  height={16}
-                  alt="water drop"
-                />
-                <p>{precipitation}%</p>
-              </div>
             </div>
           );
         });
 
+        //Previsão
         return (
           <section className={styles.forecast__container} key={index}>
             <section className={styles.forecast__day}>{day}</section>
-            <section className={styles.forecast__elements}>{hourlyForecasts}</section>
+            <section>
+              <DailyForecast groupedWeatherData={groupedWeatherData} />
+            </section>
+            <section className={styles.forecast__elements}>{forecast}</section>
           </section>
         );
       })
     );
   }, [groupedWeatherData, days]);
 
-  return <>{dailyForecasts}</>;
+  return (
+    <div>
+      <section>{forecast}</section>
+    </div>
+  );
 }
