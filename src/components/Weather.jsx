@@ -5,7 +5,7 @@ import Temp from "./Temp";
 import Wind from "./Wind";
 import City from "./City";
 import WeatherConditions from "./WeatherConditions";
-import Forecast from "./Forecast";
+import DailyForecasts from "./DailyForecasts";
 
 export default function Weather({ data, errorMessage, isLoading }) {
   //Testa a requisição e retorforecastDaysCountna se der erro
@@ -52,8 +52,8 @@ export default function Weather({ data, errorMessage, isLoading }) {
     <div className={styles.weather__container}>
       <h1 className={styles.weather__place}>{data.city.name}</h1>
       <div className={styles.weather__forecast}>
-        <div className={styles.weather__status}>
-          <Forecast
+        <section className={styles.weather__status}>
+          <DailyForecasts
             data={data}
             days={forecastDaysCount}
             updateWeatherDetails={updateWeatherDetails}
@@ -71,19 +71,21 @@ export default function Weather({ data, errorMessage, isLoading }) {
               alt="add icon"
             />
           </div>
-        </div>
+        </section>
 
-        <section className={styles.weather__info}>
+        <section className={styles.weather__infoContainer}>
           <h2>Others Informations:</h2>
-          <Temp tempWeatherData={temp} />
-          <Wind windWeatherData={wind} />
-          <City cityWeatherData={city} />
-          <WeatherConditions
-            rain={rain}
-            snow={snow}
-            visibility={visibility}
-            cloudness={cloudness}
-          />
+          <div className={styles.weather__info}>
+            <Temp tempWeatherData={temp} />
+            <Wind windWeatherData={wind} />
+            <City cityWeatherData={city} />
+            <WeatherConditions
+              rain={rain}
+              snow={snow}
+              visibility={visibility}
+              cloudness={cloudness}
+            />
+          </div>
         </section>
       </div>
     </div>

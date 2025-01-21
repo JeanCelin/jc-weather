@@ -37,7 +37,7 @@ export default function Sun({ cityWeatherData }) {
     <section className={styles.city__container}>
       <h3 className={styles.city__title}>City</h3>
       <div className={styles.city__info}>
-        <p>Polulation: {cityWeatherData.population}</p>
+        <p>Population: {cityWeatherData.population}</p>
         <div className={styles.city__group}>
           <Image
             src={"/sunrise.png"}

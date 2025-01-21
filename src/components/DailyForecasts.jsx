@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import styles from "./Forecast.module.css";
+import styles from "./DailyForecasts.module.css";
 
-export default function Forecast({ data, days = 3, updateWeatherDetails }) {
+export default function DailyForecasts({ data, days = 3, updateWeatherDetails }) {
   const weatherData = data.list;
   const [dailyForecasts, setDailyForecasts] = useState();
   const [groupedWeatherData, setGroupedWeatherData] = useState([]);

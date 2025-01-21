@@ -1,4 +1,6 @@
 .wind__container {
+  flex: 1 0 110px;
+
   font-size: 0.8em;
   padding: 5px;
   border-left: 1px solid var(--color3);
