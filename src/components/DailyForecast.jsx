@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import HourlyForecast from "./HourlyForecast";
 import styles from "./DailyForecast.module.css";
 
-export default function DailyForecast({ groupedWeatherData }) {
+export default function DailyForecast({ groupedWeatherData, elementsDaily }) {
   const [dailyForecast, setDailyForecast] = useState();
 
   useEffect(() => {
@@ -67,5 +68,10 @@ export default function DailyForecast({ groupedWeatherData }) {
       })
     );
   }, [groupedWeatherData]);
-  return <div className={styles.teste}>{dailyForecast}</div>;
+  return (
+    <div className={styles.teste}>
+      {dailyForecast}
+      {<HourlyForecast elementsDaily={elementsDaily} />}
+    </div>
+  );
 }
