@@ -1,5 +1,6 @@
 .dataDaily__container {
   display: flex;
+  flex-direction: column;
   align-items: center;
 }
 .dataDaily__descriptionContainer {
@@ -13,7 +14,6 @@
 .dataDaily__tempContainer {
   display: flex;
   flex-direction: column;
-
 }
 .dataDaily__temp {
   display: flex;

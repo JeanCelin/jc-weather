@@ -1,62 +1,49 @@
 import Image from "next/image";
 import styles from "./HourlyForecast.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-export default function FormattedIcons({ elementsDaily }) {
+export default function HourlyForecast({ groupedWeatherData, day }) {
   const [hourlyForecast, setHourlyForecast] = useState();
 
-  useState(() => {
-    console.log(elementsDaily);
+  const formattedTime = (timeStamp) => {
+    const date = new Date(timeStamp * 1000);
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(
+      2,
+      "0"
+    )}`;
+  };
 
-    setHourlyForecast(
-      elementsDaily.map((element, index) => {
-        console.log(element);
-        const elementTimestamp = element.dt;
-        const elementDate = new Date(elementTimestamp * 1000);
-        const iconCode = element.weather[0].icon;
-        const iconSrc = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
-        const elementHour = elementDate.getHours().toString().padStart(2, "0");
-        const elementMinutes = elementDate
-          .getMinutes()
-          .toString()
-          .padStart(2, "0");
-        const elementFormattedTime = `${elementHour}:${elementMinutes}`;
-        const precipitation = (Number(element.pop) * 100).toFixed(2);
+  useEffect(() => {
+    console.log(day);
+    console.log(groupedWeatherData);
 
-        return (
-          <div
-            key={index}
-            onClick={() =>
-              handleWeatherInfo(
-                element.main,
-                element.wind,
-                element.rain?.["3h"] || 0,
-                element.snow,
-                element.visibility,
-                element.clouds.all
-              )
-            }>
-            <p>{elementFormattedTime}</p>
-            <Image
-              src={iconSrc}
-              width={64}
-              height={64}
-              alt={element.weather[0].description}
-            />
-            <p>{element.weather[0].description}</p>
-            <div>
-              <Image
-                src={"/water_drop.png"}
-                width={16}
-                height={16}
-                alt="water drop"
-              />
-              <p>{precipitation}%</p>
-            </div>
-          </div>
+    groupedWeatherData.forEach((element) => {
+      if (element.day == day) {
+        const data = element.elements;
+
+        setHourlyForecast(
+          data.map((e, index) => {
+            return (
+              <div key={index} className={styles.teste}>
+                <p>{formattedTime(e.dt)}</p>
+                <Image
+                  src={`https://openweathermap.org/img/wn/${e.weather[0].icon}@2x.png`}
+                  width={64}
+                  height={64}
+                  alt={e.weather[0].description}
+                />
+                <p>{e.weather[0].description}</p>
+                <p>{e.pop * 100}%</p>
+              </div>
+            );
+          })
         );
-      })
-    );
-  }, [elementsDaily]);
-  return <div className={styles.teste}>HourlyForecast:{hourlyForecast}</div>;
+        console.log(data);
+      }
+    });
+  }, [groupedWeatherData, day]);
+
+  return <>{hourlyForecast}</>;
 }

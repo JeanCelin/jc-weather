@@ -3,12 +3,10 @@ import Image from "next/image";
 import HourlyForecast from "./HourlyForecast";
 import styles from "./DailyForecast.module.css";
 
-export default function DailyForecast({ groupedWeatherData, elementsDaily }) {
+export default function DailyForecast({ groupedWeatherData }) {
   const [dailyForecast, setDailyForecast] = useState();
 
   useEffect(() => {
-    console.log(groupedWeatherData);
-
     setDailyForecast(
       groupedWeatherData.map((element, index) => {
         const dataDaily = element.elements[0];
@@ -63,15 +61,13 @@ export default function DailyForecast({ groupedWeatherData, elementsDaily }) {
                 </div>
               </div>
             </section>
+            <section>
+              <HourlyForecast groupedWeatherData={groupedWeatherData} day={day} />
+            </section>
           </div>
         );
       })
     );
   }, [groupedWeatherData]);
-  return (
-    <div className={styles.teste}>
-      {dailyForecast}
-      {<HourlyForecast elementsDaily={elementsDaily} />}
-    </div>
-  );
+  return <div className={styles.teste}>{dailyForecast}</div>;
 }

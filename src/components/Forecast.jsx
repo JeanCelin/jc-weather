@@ -9,9 +9,7 @@ export default function DailyForecasts({
   days = 3,
   updateWeatherDetails,
 }) {
-  console.log(data);
   const weatherData = data.list;
-  const [forecast, setForecast] = useState();
   const [groupedWeatherData, setGroupedWeatherData] = useState([]);
 
   const handleWeatherInfo = (temp, wind, rain, snow, visibility, cloudness) => {
@@ -21,7 +19,6 @@ export default function DailyForecasts({
   // Agrupa os dados de clima por dia
   useEffect(() => {
     const groupedWeatherByDay = {};
-
     weatherData.forEach((element) => {
       const elementTimestamp = element.dt;
       const elementDate = new Date(elementTimestamp * 1000);
@@ -44,40 +41,20 @@ export default function DailyForecasts({
 
     // Atualiza o estado com o array agrupado
     setGroupedWeatherData(groupedWeatherArray);
+
   }, [data]);
 
-  // Separa os elementos por dias selecionados
-  useEffect(() => {
-    const selectedDaysForecast = groupedWeatherData.slice(0, days);
-
-    // Transforma os itens em formato HTML para exibir no site
-    setForecast(
-      selectedDaysForecast.map((element, index) => {
-        const day = element.day;
-        const elementsDaily = element.elements;
-
-        //Previsão por horario
-
-        //Previsão
-        return (
-          <section className={styles.forecast__container} key={index}>
-            <section className={styles.forecast__day}>{day}</section>
-            <section>
-              <DailyForecast
-                groupedWeatherData={groupedWeatherData}
-                elementsDaily={elementsDaily}
-              />
-            </section>
-            <section className={styles.forecast__elements}>{forecast}</section>
-          </section>
-        );
-      })
-    );
-  }, [groupedWeatherData, days]);
 
   return (
     <div>
-      <section>{forecast}</section>
+      <section className={styles.forecast__container}>
+        <section>
+          <DailyForecast
+            groupedWeatherData={groupedWeatherData}
+  
+          />
+        </section>
+      </section>
     </div>
   );
 }
