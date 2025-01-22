@@ -20,10 +20,10 @@ export default function DailyForecast({ groupedWeatherData }) {
         return (
           <div key={index} className={styles.dailyForecast__container}>
             <div className={styles.dailyForecast__content}>
-              <p>{day}</p>
-              <div>
+              <section>
+                <p>{day}</p>
                 <Image src={iconSrc} width={64} height={64} alt="teste" />
-              </div>
+              </section>
               <section className={styles.dailyForecast__descriptionContainer}>
                 <p>{weather.description}</p>
                 <Image
@@ -60,17 +60,12 @@ export default function DailyForecast({ groupedWeatherData }) {
                   </div>
                 </div>
               </section>
-              {/* <section>
-                <HourlyForecast
-                  groupedWeatherData={groupedWeatherData}
-                  day={day}
-                />
-              </section> */}
             </div>
+            <HourlyForecast groupedWeatherData={groupedWeatherData} day={day} />
           </div>
         );
       })
     );
   }, [groupedWeatherData]);
-  return <>{dailyForecast}</>;
+  return <div className={styles.teste}>{dailyForecast}</div>;
 }

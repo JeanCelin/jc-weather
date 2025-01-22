@@ -23,24 +23,25 @@ export default function HourlyForecast({ groupedWeatherData, day }) {
         setHourlyForecast(
           data.map((e, index) => {
             return (
-              <div key={index} className={styles.teste}>
+              <div key={index} className={styles.hourlyForecast__content}>
                 <p>{formattedTime(e.dt)}</p>
                 <Image
                   src={`https://openweathermap.org/img/wn/${e.weather[0].icon}@2x.png`}
-                  width={64}
-                  height={64}
+                  width={48}
+                  height={48}
                   alt={e.weather[0].description}
                 />
                 <p>{e.weather[0].description}</p>
-                <p>{e.pop * 100}%</p>
+                <p>{parseInt(e.pop * 100)}%</p>
               </div>
             );
           })
         );
-    
       }
     });
   }, [groupedWeatherData, day]);
 
-  return <>{hourlyForecast}</>;
+  return (
+    <div className={styles.hourlyForecast__container}>{hourlyForecast}</div>
+  );
 }

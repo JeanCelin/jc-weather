@@ -1,4 +1,19 @@
-.teste {
+.hourlyForecast__container {
+  border-top: 1px solid var(--color2);
   display: flex;
-  
+  justify-content: flex-start;
+  text-align: center;
+  gap: 20px;
+
+  max-width: 482px;
+  overflow-x: scroll;
+
+  padding: 10px 0;
+
+  font-size: 0.9em;
+}
+.hourlyForecast__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

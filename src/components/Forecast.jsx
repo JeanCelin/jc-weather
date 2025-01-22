@@ -43,11 +43,5 @@ export default function DailyForecasts({
     setGroupedWeatherData(groupedWeatherArray);
   }, [data]);
 
-  return (
-    <div>
-      <section className={styles.forecast__container}>
-        <DailyForecast groupedWeatherData={groupedWeatherData} />
-      </section>
-    </div>
-  );
+  return <DailyForecast groupedWeatherData={groupedWeatherData} />;
 }
