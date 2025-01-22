@@ -19,9 +19,9 @@ export default function DailyForecast({ groupedWeatherData }) {
 
         return (
           <div key={index} className={styles.dailyForecast__container}>
+            <p className={styles.dailyForecast__day}>{day}</p>
             <div className={styles.dailyForecast__content}>
               <section>
-                <p>{day}</p>
                 <Image src={iconSrc} width={64} height={64} alt="teste" />
               </section>
               <section className={styles.dailyForecast__descriptionContainer}>

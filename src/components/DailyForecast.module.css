@@ -12,13 +12,26 @@
   text-transform: uppercase;
   max-width: 90vw;
   font-size: 0.9em;
+
+  position: relative;
 }
 .dailyForecast__content {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-around;
   align-items: center;
   flex-wrap: wrap;
-  gap: 20px;
+
+  text-align: center;
+}
+.dailyForecast__day {
+  padding: 10px;
+  border-radius: 50%;
+
+  position: absolute;
+
+  top: 40%;
+  left: -16px;
+  background-color: var(--color2);
 }
 .dailyForecast__descriptionContainer {
   text-align: center;
@@ -39,7 +52,8 @@
 
 .dailyForecast__tempVariationContainer {
   display: flex;
-  flex-direction: column;
+  margin-top: 5px;
+  justify-content: space-around;
 }
 .dailyForecast__tempVariation {
   display: flex;
