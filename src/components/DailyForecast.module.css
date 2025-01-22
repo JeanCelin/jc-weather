@@ -33,6 +33,11 @@
   left: -16px;
   background-color: var(--color2);
 }
+.dailyForecast__hidden {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
 .dailyForecast__descriptionContainer {
   text-align: center;
 

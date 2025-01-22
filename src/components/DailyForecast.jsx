@@ -4,11 +4,20 @@ import HourlyForecast from "./HourlyForecast";
 import styles from "./DailyForecast.module.css";
 
 export default function DailyForecast({ groupedWeatherData }) {
-  const [dailyForecast, setDailyForecast] = useState();
+  const [openDays, setOpenDays] = useState({}); // Novo estado para rastrear quais dias estão abertos
 
-  useEffect(() => {
-    setDailyForecast(
-      groupedWeatherData.map((element, index) => {
+  // Função que altera o estado para o dia específico
+  const handleDropArrow = (day) => {
+    setOpenDays((prev) => ({
+      ...prev, // Mantém o estado anterior
+      [day]: !prev[day], // Inverte o valor apenas para o dia clicado
+    }));
+  };
+
+
+  return (
+    <div className={styles.teste}>
+      {groupedWeatherData.map((element, index) => {
         const dataDaily = element.elements[0];
         const weather = dataDaily.weather[0];
         const temp = dataDaily.main;
@@ -20,6 +29,26 @@ export default function DailyForecast({ groupedWeatherData }) {
         return (
           <div key={index} className={styles.dailyForecast__container}>
             <p className={styles.dailyForecast__day}>{day}</p>
+            <div
+              className={styles.dailyForecast__hidden}
+              onClick={() => handleDropArrow(day)} // Passa o dia para a função
+            >
+              {openDays[day] ? ( // Verifica se o dia está "aberto" no estado
+                <Image
+                  src={"/arrow_drop_up.png"}
+                  width={24}
+                  height={24}
+                  alt="arrow drop up icon"
+                />
+              ) : (
+                <Image
+                  src={"/arrow_drop_down.png"}
+                  width={24}
+                  height={24}
+                  alt="arrow drop down icon"
+                />
+              )}
+            </div>
             <div className={styles.dailyForecast__content}>
               <section>
                 <Image
@@ -42,7 +71,7 @@ export default function DailyForecast({ groupedWeatherData }) {
               <section className={styles.dailyForecast__tempContainer}>
                 <div className={styles.dailyForecast__temp}>
                   <p>Temp: {temp.temp}°C</p>
-                  <p>feels like: {temp.feels_like}°C</p>
+                  <p>Feels like: {temp.feels_like}°C</p>
                 </div>
                 <div className={styles.dailyForecast__tempVariationContainer}>
                   <div className={styles.dailyForecast__tempVariation}>
@@ -66,11 +95,15 @@ export default function DailyForecast({ groupedWeatherData }) {
                 </div>
               </section>
             </div>
-            <HourlyForecast groupedWeatherData={groupedWeatherData} day={day} />
+            {openDays[day] && (
+              <HourlyForecast
+                groupedWeatherData={groupedWeatherData}
+                day={day}
+              />
+            )}
           </div>
         );
-      })
-    );
-  }, [groupedWeatherData]);
-  return <div className={styles.teste}>{dailyForecast}</div>;
+      })}
+    </div>
+  );
 }
