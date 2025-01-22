@@ -45,9 +45,16 @@ export default function Weather({ data, errorMessage, isLoading }) {
 
   //Verifica se os dias exibidos são 3 se não ao clicar exibe 5 e vise-versa
   let daysCount = forecastDaysCount;
-  const toggleForecastDays = () => {
-    if (forecastDaysCount <= 6) {
+  const addForecastDays = () => {
+    if (forecastDaysCount < 6) {
       daysCount++;
+      setForecastDaysCount(daysCount);
+      console.log(forecastDaysCount);
+    }
+  };
+  const removeForecastDays = () => {
+    if (forecastDaysCount > 1) {
+      daysCount--;
       setForecastDaysCount(daysCount);
       console.log(forecastDaysCount);
     }
@@ -58,24 +65,32 @@ export default function Weather({ data, errorMessage, isLoading }) {
       <h1 className={styles.weather__place}>{data.city.name}</h1>
       <div className={styles.weather__forecast}>
         <section className={styles.weather__status}>
-          {/* Inserir o CurrentWeather Aqui! */}
-
           <Forecast
             data={data}
             days={forecastDaysCount}
             updateWeatherDetails={updateWeatherDetails}
           />
-          <div
-            className={styles.weather__plus}
-            onClick={() => {
-              toggleForecastDays();
-            }}>
+
+          <div className={styles.weather__interaction}>
             <Image
-              className={styles.weather__plusIcon}
+              className={styles.weather__icon}
+              src={"/remove.png"}
+              width={24}
+              height={24}
+              alt="remove icon"
+              onClick={() => {
+                removeForecastDays();
+              }}
+            />
+            <Image
+              className={styles.weather__icon}
               src="/add.png"
               width={24}
               height={24}
               alt="add icon"
+              onClick={() => {
+                addForecastDays();
+              }}
             />
           </div>
         </section>

@@ -7,7 +7,6 @@ export default function DailyForecast({ groupedWeatherData }) {
   const [dailyForecast, setDailyForecast] = useState();
 
   useEffect(() => {
-  
     setDailyForecast(
       groupedWeatherData.map((element, index) => {
         const dataDaily = element.elements[0];
@@ -23,7 +22,12 @@ export default function DailyForecast({ groupedWeatherData }) {
             <p className={styles.dailyForecast__day}>{day}</p>
             <div className={styles.dailyForecast__content}>
               <section>
-                <Image src={iconSrc} width={64} height={64} alt="teste" />
+                <Image
+                  src={iconSrc}
+                  width={64}
+                  height={64}
+                  alt={weather.description}
+                />
               </section>
               <section className={styles.dailyForecast__descriptionContainer}>
                 <p>{weather.description}</p>

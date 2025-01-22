@@ -29,23 +29,23 @@
   justify-content: space-evenly;
 }
 
-.weather__plus {
+.weather__interaction {
   position: absolute;
-  bottom: -15px;
-  left: 45%;
-  padding: 1px;
+  bottom: -13px;
+  left: 44%;
 
-  width: 30px;
-  height: 30px;
-
-  background-color: var(--color2);
-  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 10px;
   cursor: pointer;
 }
-.weather__plus:hover {
+
+.weather__icon {
+  background-color: var(--color2);
+  border-radius: 50%;
+}
+.weather__icon:hover {
   background-color: var(--color3);
   transition: ease-in 300ms;
 }
