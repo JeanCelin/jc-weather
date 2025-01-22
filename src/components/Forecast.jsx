@@ -41,19 +41,12 @@ export default function DailyForecasts({
 
     // Atualiza o estado com o array agrupado
     setGroupedWeatherData(groupedWeatherArray);
-
   }, [data]);
-
 
   return (
     <div>
       <section className={styles.forecast__container}>
-        <section>
-          <DailyForecast
-            groupedWeatherData={groupedWeatherData}
-  
-          />
-        </section>
+        <DailyForecast groupedWeatherData={groupedWeatherData} />
       </section>
     </div>
   );

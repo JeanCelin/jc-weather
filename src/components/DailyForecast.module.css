@@ -1,29 +1,44 @@
-.dataDaily__container {
+.dailyForecast__container {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.dataDaily__descriptionContainer {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
   align-items: center;
 
+  padding: 5px;
+  border: 1px solid var(--color2);
+  border-radius: 10px;
   text-transform: uppercase;
+
+  font-size: 0.9em;
 }
-.dataDaily__tempContainer {
+.dailyForecast__content {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 20px;
+}
+.dailyForecast__descriptionContainer {
+  text-align: center;
+  flex: 0 0 70px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+.dailyForecast__tempContainer {
   display: flex;
   flex-direction: column;
 }
-.dataDaily__temp {
+.dailyForecast__temp {
   display: flex;
   gap: 10px;
 }
-.dataDaily__tempVariationContainer {
+
+.dailyForecast__tempVariationContainer {
   display: flex;
   flex-direction: column;
 }
-.dataDaily__tempVariation {
+.dailyForecast__tempVariation {
   display: flex;
+  flex-wrap: nowrap;
   align-items: center;
 }

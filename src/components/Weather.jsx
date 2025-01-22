@@ -54,7 +54,7 @@ export default function Weather({ data, errorMessage, isLoading }) {
       <div className={styles.weather__forecast}>
         <section className={styles.weather__status}>
           {/* Inserir o CurrentWeather Aqui! */}
-         
+  
           <Forecast
             data={data}
             days={forecastDaysCount}

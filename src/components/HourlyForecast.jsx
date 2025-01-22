@@ -16,9 +16,6 @@ export default function HourlyForecast({ groupedWeatherData, day }) {
   };
 
   useEffect(() => {
-    console.log(day);
-    console.log(groupedWeatherData);
-
     groupedWeatherData.forEach((element) => {
       if (element.day == day) {
         const data = element.elements;
@@ -40,7 +37,7 @@ export default function HourlyForecast({ groupedWeatherData, day }) {
             );
           })
         );
-        console.log(data);
+    
       }
     });
   }, [groupedWeatherData, day]);
