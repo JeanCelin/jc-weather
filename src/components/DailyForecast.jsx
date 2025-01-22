@@ -7,6 +7,7 @@ export default function DailyForecast({ groupedWeatherData }) {
   const [dailyForecast, setDailyForecast] = useState();
 
   useEffect(() => {
+  
     setDailyForecast(
       groupedWeatherData.map((element, index) => {
         const dataDaily = element.elements[0];

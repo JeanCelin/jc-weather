@@ -13,7 +13,7 @@ export default function Weather({ data, errorMessage, isLoading }) {
   if (errorMessage) return <p>Erro: {errorMessage}</p>;
 
   console.log(data);
-  const [forecastDaysCount, setForecastDaysCount] = useState(3);
+  const [forecastDaysCount, setForecastDaysCount] = useState(1);
   const [city, setCity] = useState(data.city);
   const [temp, setTemp] = useState(data.list[0].main);
   const [wind, setWind] = useState(data.list[0].wind);
@@ -44,8 +44,13 @@ export default function Weather({ data, errorMessage, isLoading }) {
   }, [data]);
 
   //Verifica se os dias exibidos são 3 se não ao clicar exibe 5 e vise-versa
+  let daysCount = forecastDaysCount;
   const toggleForecastDays = () => {
-    forecastDaysCount === 3 ? setForecastDaysCount(5) : setForecastDaysCount(3);
+    if (forecastDaysCount <= 6) {
+      daysCount++;
+      setForecastDaysCount(daysCount);
+      console.log(forecastDaysCount);
+    }
   };
   //Informações do tempo(cronológico) atual
   return (
@@ -54,7 +59,7 @@ export default function Weather({ data, errorMessage, isLoading }) {
       <div className={styles.weather__forecast}>
         <section className={styles.weather__status}>
           {/* Inserir o CurrentWeather Aqui! */}
-  
+
           <Forecast
             data={data}
             days={forecastDaysCount}
@@ -68,8 +73,8 @@ export default function Weather({ data, errorMessage, isLoading }) {
             <Image
               className={styles.weather__plusIcon}
               src="/add.png"
-              width={30}
-              height={30}
+              width={24}
+              height={24}
               alt="add icon"
             />
           </div>

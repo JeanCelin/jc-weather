@@ -24,12 +24,12 @@
   text-align: center;
 }
 .dailyForecast__day {
-  padding: 10px;
+  padding: 8px;
   border-radius: 50%;
 
   position: absolute;
 
-  top: 40%;
+  top: 38%;
   left: -16px;
   background-color: var(--color2);
 }

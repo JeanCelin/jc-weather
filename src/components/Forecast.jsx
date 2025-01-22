@@ -6,7 +6,7 @@ import DailyForecast from "./DailyForecast";
 
 export default function DailyForecasts({
   data,
-  days = 3,
+  days = 1,
   updateWeatherDetails,
 }) {
   const weatherData = data.list;
@@ -19,12 +19,13 @@ export default function DailyForecasts({
   // Agrupa os dados de clima por dia
   useEffect(() => {
     const groupedWeatherByDay = {};
-    weatherData.forEach((element) => {
+    weatherData.forEach((element, index) => {
       const elementTimestamp = element.dt;
       const elementDate = new Date(elementTimestamp * 1000);
       const elementDay = parseInt(
         elementDate.getDate().toString().padStart(2, "0")
       );
+
       if (!groupedWeatherByDay[elementDay]) {
         groupedWeatherByDay[elementDay] = [];
       }
@@ -32,16 +33,16 @@ export default function DailyForecasts({
     });
 
     // Converte o objeto em array de objetos com day e elements
-    const groupedWeatherArray = Object.entries(groupedWeatherByDay).map(
-      ([day, elements]) => ({
+    const groupedWeatherArray = Object.entries(groupedWeatherByDay)
+      .map(([day, elements]) => ({
         day,
         elements,
-      })
-    );
+      }))
+      .slice(0, days);
 
     // Atualiza o estado com o array agrupado
     setGroupedWeatherData(groupedWeatherArray);
-  }, [data]);
+  }, [data, days]);
 
-  return <DailyForecast groupedWeatherData={groupedWeatherData} />;
+  return <DailyForecast groupedWeatherData={groupedWeatherData} days={days} />;
 }
