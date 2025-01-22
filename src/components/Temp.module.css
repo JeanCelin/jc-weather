@@ -14,8 +14,6 @@
   padding-bottom: 10px;
 }
 .temp__infoMessage {
-  background-color: #ffffff;
-
   padding: 5px;
   box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.313);
 }
@@ -23,9 +21,9 @@
   padding-bottom: 5px;
   display: flex;
   gap: 10px;
+  text-align: center;
 }
 .temp__variable {
   display: flex;
   align-items: center;
-  gap: 5px;
 }

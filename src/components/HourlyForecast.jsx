@@ -32,7 +32,16 @@ export default function HourlyForecast({ groupedWeatherData, day }) {
                   alt={e.weather[0].description}
                 />
                 <p>{e.weather[0].description}</p>
-                <p>{parseInt(e.pop * 100)}%</p>
+
+                <div className={styles.hourlyForecast__preciptation}>
+                  <Image
+                    src={"/water_drop.png"}
+                    width={16}
+                    height={16}
+                    alt="water drop"
+                  />
+                  <p>{parseInt(e.pop * 100)}%</p>
+                </div>
               </div>
             );
           })

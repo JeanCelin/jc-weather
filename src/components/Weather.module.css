@@ -19,8 +19,8 @@
   display: flex;
   flex-direction: column;
 
-  margin: 30px;
-  gap: 30px;
+  margin: 10px;
+  gap: 15px;
 }
 
 .weather__info {
@@ -51,12 +51,12 @@
 }
 
 @media (max-width: 965px) {
-  .weather__infoContainer h2 {
-    font-size: 1em;
+  .weather__infoContainer {
+    font-size: 0.9em;
   }
   .weather__info {
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-evenly;
     gap: 20px;
   }
 }

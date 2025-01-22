@@ -14,9 +14,8 @@ export default function DailyForecast({ groupedWeatherData }) {
     }));
   };
 
-
   return (
-    <div className={styles.teste}>
+    <div>
       {groupedWeatherData.map((element, index) => {
         const dataDaily = element.elements[0];
         const weather = dataDaily.weather[0];
@@ -60,13 +59,15 @@ export default function DailyForecast({ groupedWeatherData }) {
               </section>
               <section className={styles.dailyForecast__descriptionContainer}>
                 <p>{weather.description}</p>
-                <Image
-                  src={"/water_drop.png"}
-                  width={16}
-                  height={16}
-                  alt="water drop"
-                />
-                <p>{dataDaily.pop * 100}%</p>
+                <div>
+                  <Image
+                    src={"/water_drop.png"}
+                    width={16}
+                    height={16}
+                    alt="water drop"
+                  />
+                  <p>{dataDaily.pop * 100}%</p>
+                </div>
               </section>
               <section className={styles.dailyForecast__tempContainer}>
                 <div className={styles.dailyForecast__temp}>

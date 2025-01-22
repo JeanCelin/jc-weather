@@ -8,12 +8,15 @@
   max-width: 482px;
   overflow-x: scroll;
 
-  padding: 10px 0;
-
   font-size: 0.9em;
+  padding: 5px 10px;
 }
 .hourlyForecast__content {
   display: flex;
   flex-direction: column;
+  align-items: center;
+}
+.hourlyForecast__preciptation {
+  display: flex;
   align-items: center;
 }

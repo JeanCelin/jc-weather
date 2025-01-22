@@ -3,7 +3,6 @@ import Image from "next/image";
 import styles from "./Wind.module.css";
 
 export default function Wind({ windWeatherData }) {
-
   const degrees = windWeatherData.deg; // Pega a direção na API
   const [imgSrc, setImgSrc] = useState("/compass-rose/north.png");
   const [windDirection, setWindDirection] = useState("Loading...");
@@ -49,7 +48,6 @@ export default function Wind({ windWeatherData }) {
       <h3 className={styles.wind__title}>Wind</h3>
       <div className={styles.wind__directionContainer}>
         <div className={styles.wind__direction}>
-          Direction:{" "}
           <Image
             src={imgSrc}
             width={16}
@@ -57,7 +55,7 @@ export default function Wind({ windWeatherData }) {
             alt="wind direction icon"
           />
           {windDirection}
-        </div>{" "}
+        </div>
       </div>
       <div className={styles.wind__direction}>
         <Image src={"/air.png"} width={16} height={16} alt="wind icon" />
@@ -70,7 +68,9 @@ export default function Wind({ windWeatherData }) {
           height={16}
           alt="wind power icon"
         />
-        <p className={styles.wind__gust}>Wind Gust: {windWeatherData.gust} m/s</p>
+        <p className={styles.wind__gust}>
+          Wind Gust: {windWeatherData.gust}m/s
+        </p>
       </div>
     </section>
   );

@@ -12,8 +12,8 @@ export default function Temp({ tempWeatherData }) {
         </div>
       </div>
       <div className={styles.temp__info}>
-        <p>Temp: {tempWeatherData.temp}°C</p>
-        <p>Feels Like: {tempWeatherData.feels_like}°C</p>
+        <p>Temp: {parseInt(tempWeatherData.temp)}°C</p>
+        <p>Feels Like: {parseInt(tempWeatherData.feels_like)}°C</p>
       </div>
       <div className={styles.temp__variable}>
         <Image
@@ -21,7 +21,7 @@ export default function Temp({ tempWeatherData }) {
           width={24}
           height={24}
           alt="arrow up icon"></Image>
-        <p>Temp max: {tempWeatherData.temp_max}°C</p>
+        <p>Temp max: {parseInt(tempWeatherData.temp_max)}°C</p>
       </div>
       <div className={styles.temp__variable}>
         <Image
@@ -29,7 +29,7 @@ export default function Temp({ tempWeatherData }) {
           width={24}
           height={24}
           alt="arrow down icon"></Image>
-        <p>Temp min: {tempWeatherData.temp_min}°C</p>
+        <p>Temp min: {parseInt(tempWeatherData.temp_min)}°C</p>
       </div>
     </section>
   );
