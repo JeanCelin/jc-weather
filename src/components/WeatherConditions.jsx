@@ -14,7 +14,7 @@ export default function WeatherConditions({
 
   // Atualiza o estado com base no valor fornecido
   const updateConditionState = (value, setState) => {
-    if (value) {
+    if (value !== undefined) {  // Verifica se o valor não é undefined
       setState(true);
     }
   };
@@ -29,10 +29,11 @@ export default function WeatherConditions({
   return (
     <section className={styles.weatherConditions__container}>
       <h3 className={styles.weatherConditions__title}>Weather Conditions</h3>
-      {isRain && <p>{`Rain vol for last 3h: ${rain} mm`}</p>}
-      {isSnow && <p>{`Snow vol for last 3h: ${snow} mm`}</p>}
-      {isVisibility && <p>{`Visibility: ${visibility} metres`}</p>}
-      {isCloudness && <p>{`Cloudness: ${cloudness}%`}</p>}
+      {/* Condições só são exibidas se as variáveis correspondentes forem true */}
+      {isRain && rain?.["3h"] !== undefined && <p>{`Rain vol for last 3h: ${rain["3h"]} mm`}</p>}
+      {isSnow && snow !== undefined && <p>{`Snow vol for last 3h: ${snow} mm`}</p>}
+      {isVisibility && visibility !== undefined && <p>{`Visibility: ${visibility} metres`}</p>}
+      {isCloudness && cloudness !== undefined && <p>{`Cloudness: ${cloudness}%`}</p>}
     </section>
   );
 }

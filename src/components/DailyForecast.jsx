@@ -3,7 +3,7 @@ import Image from "next/image";
 import HourlyForecast from "./HourlyForecast";
 import styles from "./DailyForecast.module.css";
 
-export default function DailyForecast({ groupedWeatherData }) {
+export default function DailyForecast({ groupedWeatherData, updateWeatherDetails }) {
   const [openDays, setOpenDays] = useState({}); // Novo estado para rastrear quais dias estão abertos
 
   // Função que altera o estado para o dia específico
@@ -13,6 +13,7 @@ export default function DailyForecast({ groupedWeatherData }) {
       [day]: !prev[day], // Inverte o valor apenas para o dia clicado
     }));
   };
+
 
   return (
     <div>
@@ -99,6 +100,7 @@ export default function DailyForecast({ groupedWeatherData }) {
             {openDays[day] && (
               <HourlyForecast
                 groupedWeatherData={groupedWeatherData}
+                updateWeatherDetails={updateWeatherDetails}
                 day={day}
               />
             )}

@@ -11,10 +11,6 @@ export default function DailyForecasts({
   const [groupedWeatherData, setGroupedWeatherData] = useState([]);
 
 
-  const handleWeatherInfo = (temp, wind, rain, snow, visibility, cloudness) => {
-    updateWeatherDetails(temp, wind, rain, snow, visibility, cloudness);
-  };
-
   // Agrupa os dados de clima por dia
   useEffect(() => {
     const groupedWeatherByDay = {};
@@ -43,5 +39,5 @@ export default function DailyForecasts({
     setGroupedWeatherData(groupedWeatherArray);
   }, [data, days]);
 
-  return <DailyForecast groupedWeatherData={groupedWeatherData} days={days} />;
+  return <DailyForecast groupedWeatherData={groupedWeatherData} days={days} updateWeatherDetails={updateWeatherDetails}/>;
 }

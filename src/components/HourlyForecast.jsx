@@ -2,7 +2,11 @@ import Image from "next/image";
 import styles from "./HourlyForecast.module.css";
 import { useEffect, useState } from "react";
 
-export default function HourlyForecast({ groupedWeatherData, day }) {
+export default function HourlyForecast({
+  groupedWeatherData,
+  day,
+  updateWeatherDetails,
+}) {
   const [hourlyForecast, setHourlyForecast] = useState();
 
   const formattedTime = (timeStamp) => {
@@ -15,6 +19,10 @@ export default function HourlyForecast({ groupedWeatherData, day }) {
     )}`;
   };
 
+  const handleWeatherInfo = (temp, wind, rain, snow, visibility, cloudness) => {
+    updateWeatherDetails(temp, wind, rain, snow, visibility, cloudness);
+  };
+
   useEffect(() => {
     groupedWeatherData.forEach((element) => {
       if (element.day == day) {
@@ -22,8 +30,21 @@ export default function HourlyForecast({ groupedWeatherData, day }) {
 
         setHourlyForecast(
           data.map((e, index) => {
+            console.log(e);
             return (
-              <div key={index} className={styles.hourlyForecast__content}>
+              <div
+                key={index}
+                className={styles.hourlyForecast__content}
+                onClick={() =>
+                  handleWeatherInfo(
+                    e.main,
+                    e.wind,
+                    e.rain,
+                    e.snow,
+                    e.visibility,
+                    e.clouds.all
+                  )
+                }>
                 <p>{formattedTime(e.dt)}</p>
                 <Image
                   src={`https://openweathermap.org/img/wn/${e.weather[0].icon}@2x.png`}
