@@ -2,7 +2,7 @@ import Image from "next/image";
 import styles from "./Temp.module.css";
 
 export default function Temp({ tempWeatherData }) {
-  console.log(tempWeatherData);
+
   return (
     <section className={styles.temp__container}>
       <div className={styles.temp__titleContainer}>

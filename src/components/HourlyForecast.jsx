@@ -30,7 +30,6 @@ export default function HourlyForecast({
 
         setHourlyForecast(
           data.map((e, index) => {
-            console.log(e);
             return (
               <div
                 key={index}

@@ -6,13 +6,13 @@ import Wind from "./Wind";
 import City from "./City";
 import WeatherConditions from "./WeatherConditions";
 import Forecast from "./Forecast";
+import CoordinatesAPI from "./API/CoordinatesAPI";
 
 export default function Weather({ data, errorMessage, isLoading }) {
   //Testa a requisição e retorforecastDaysCountna se der erro
   if (isLoading) return <p>Carregando...</p>;
   if (errorMessage) return <p>Erro: {errorMessage}</p>;
 
-  console.log(data);
   const [forecastDaysCount, setForecastDaysCount] = useState(1);
   const [city, setCity] = useState(data.city);
   const [temp, setTemp] = useState(data.list[0].main);
@@ -49,19 +49,20 @@ export default function Weather({ data, errorMessage, isLoading }) {
     if (forecastDaysCount < 6) {
       daysCount++;
       setForecastDaysCount(daysCount);
-      console.log(forecastDaysCount);
+  
     }
   };
   const removeForecastDays = () => {
     if (forecastDaysCount > 1) {
       daysCount--;
       setForecastDaysCount(daysCount);
-      console.log(forecastDaysCount);
+    
     }
   };
   //Informações do tempo(cronológico) atual
   return (
     <div className={styles.weather__container}>
+      <CoordinatesAPI />
       <h1 className={styles.weather__place}>{data.city.name}</h1>
       <div className={styles.weather__forecast}>
         <section className={styles.weather__status}>

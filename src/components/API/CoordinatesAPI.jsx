@@ -1,34 +1,35 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import Weather from "@/components/Weather";
+import Search from "../Search";
 
-export default function API() {
+export default function CoordinatesAPI() {
   const [data, setData] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
   const apiKey = process.env.NEXT_PUBLIC_API_KEY;
+  const cityName = "Castelo";
+  const limit = 100;
 
   useEffect(() => {
-    // Defina a URL da API que deseja consumir
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `https://api.openweathermap.org/data/2.5/forecast?lat=-20.60&lon=-41.20&appid=${apiKey}&units=metric`
+          `http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=${limit}&appid=${apiKey}`
         );
         setData(response.data);
       } catch (err) {
-        setErrorMessage("Bad request :(");
-        console.error(err);
+        setErrorMessage("Erro ao buscar dados");
+        console.error(
+          "Erro na API:",
+          err.response ? err.response.data : err.message
+        );
       } finally {
         setIsLoading(false);
       }
     };
-
     fetchData();
   }, []);
 
-  return (
-    <Weather data={data} errorMessage={errorMessage} isLoading={isLoading} />
-  );
+  console.log(data);
 }

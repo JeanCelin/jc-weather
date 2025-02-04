@@ -17,7 +17,6 @@ export default function DailyForecast({
     }));
   };
 
-  console.log(openDays);
   return (
     <div>
       {groupedWeatherData.map((element, index) => {
