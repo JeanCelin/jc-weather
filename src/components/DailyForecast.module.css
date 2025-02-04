@@ -21,16 +21,27 @@
   font-size: 0.9em;
 }
 .dailyForecast__day {
-  padding: 8px;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 32px;
+  height: 32px;
+
   border-radius: 50%;
 
-  position: absolute;
-
-  top: 38%;
   left: -16px;
   color: white;
   background-color: var(--color2);
 }
+
+.dailyForecast__day_shortPosition {
+  top: 40%;
+}
+.dailyForecast__day_longPosition {
+  top: 34%;
+}
+
 .dailyForecast__hidden {
   position: absolute;
   top: 0;
@@ -64,4 +75,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+@media (min-width: 483px) {
+  .dailyForecast__container {
+    max-width: 434px;
+  }
 }

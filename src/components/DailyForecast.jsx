@@ -3,7 +3,10 @@ import Image from "next/image";
 import HourlyForecast from "./HourlyForecast";
 import styles from "./DailyForecast.module.css";
 
-export default function DailyForecast({ groupedWeatherData, updateWeatherDetails }) {
+export default function DailyForecast({
+  groupedWeatherData,
+  updateWeatherDetails,
+}) {
   const [openDays, setOpenDays] = useState({}); // Novo estado para rastrear quais dias estão abertos
 
   // Função que altera o estado para o dia específico
@@ -14,7 +17,7 @@ export default function DailyForecast({ groupedWeatherData, updateWeatherDetails
     }));
   };
 
-
+  console.log(openDays);
   return (
     <div>
       {groupedWeatherData.map((element, index) => {
@@ -28,7 +31,14 @@ export default function DailyForecast({ groupedWeatherData, updateWeatherDetails
 
         return (
           <div key={index} className={styles.dailyForecast__container}>
-            <p className={styles.dailyForecast__day}>{day}</p>
+            <p
+              className={`${styles.dailyForecast__day} ${
+                openDays[day]
+                  ? styles.dailyForecast__day_shortPosition
+                  : styles.dailyForecast__day_longPosition
+              }`}>
+              {day}
+            </p>
             <div
               className={styles.dailyForecast__hidden}
               onClick={() => handleDropArrow(day)} // Passa o dia para a função
@@ -98,11 +108,16 @@ export default function DailyForecast({ groupedWeatherData, updateWeatherDetails
               </section>
             </div>
             {openDays[day] && (
-              <HourlyForecast
-                groupedWeatherData={groupedWeatherData}
-                updateWeatherDetails={updateWeatherDetails}
-                day={day}
-              />
+              <div
+                className={`${styles.hourlyForecast__container} ${
+                  openDays[day] ? "show" : ""
+                }`}>
+                <HourlyForecast
+                  groupedWeatherData={groupedWeatherData}
+                  updateWeatherDetails={updateWeatherDetails}
+                  day={day}
+                />
+              </div>
             )}
           </div>
         );

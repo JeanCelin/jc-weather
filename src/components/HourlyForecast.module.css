@@ -5,16 +5,19 @@
   text-align: center;
   gap: 20px;
 
-  max-width: 482px;
+  max-width: 100%;
   overflow-x: scroll;
 
-  font-size: 0.9em;
+  font-size: 0.8em;
   padding: 5px 10px;
 }
+
 .hourlyForecast__content {
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  flex: 0 0 62px;
 }
 .hourlyForecast__preciptation {
   display: flex;

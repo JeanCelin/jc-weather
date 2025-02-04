@@ -10,7 +10,6 @@ export default function DailyForecasts({
   const weatherData = data.list;
   const [groupedWeatherData, setGroupedWeatherData] = useState([]);
 
-
   // Agrupa os dados de clima por dia
   useEffect(() => {
     const groupedWeatherByDay = {};
@@ -20,7 +19,6 @@ export default function DailyForecasts({
       const elementDay = parseInt(
         elementDate.getDate().toString().padStart(2, "0")
       );
-
       if (!groupedWeatherByDay[elementDay]) {
         groupedWeatherByDay[elementDay] = [];
       }
@@ -35,9 +33,25 @@ export default function DailyForecasts({
       }))
       .slice(0, days);
 
+
     // Atualiza o estado com o array agrupado
     setGroupedWeatherData(groupedWeatherArray);
   }, [data, days]);
 
-  return <DailyForecast groupedWeatherData={groupedWeatherData} days={days} updateWeatherDetails={updateWeatherDetails}/>;
+  return (
+    <DailyForecast
+      groupedWeatherData={groupedWeatherData}
+      days={days}
+      updateWeatherDetails={updateWeatherDetails}
+    />
+  );
 }
+
+/* corrigir o problema, de que quando o mes está acabando a ordem dos dias inverter exemplo:
+  01 (Fevereiro)
+  02 (Fevereiro)
+  28 (Janeiro)
+  29 (Janeiro)
+  30 (Janeiro)
+  31 (Janeiro)
+*/
