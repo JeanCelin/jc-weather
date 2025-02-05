@@ -1,92 +1,79 @@
 import axios from "axios";
 import { useState } from "react";
+import styles from './Search.module.css'
 
-export default function Search() {
+export default function Search({ onCoordinatesFound }) {
   const [location, setLocation] = useState("");
-  const [data, setData] = useState(null);
+  const [suggestions, setSuggestions] = useState([]);
   const [errorMessage, setErrorMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const apiKey = process.env.NEXT_PUBLIC_API_KEY;
 
-  const handleChange = (e) => {
-    setLocation(e.target.value);
-  };
+  // Atualiza o estado conforme o usuário digita
+  const handleChange = async (e) => {
+    const value = e.target.value;
+    setLocation(value);
 
-  const handleSearch = async (e) => {
-    if (e.key !== "Enter") return; // Apenas busca quando pressionar Enter
-
-    if (!location.trim()) return; // Evita busca vazia
-
-    setIsLoading(true);
-    setErrorMessage(null);
+    if (value.length < 2) {
+      setSuggestions([]);
+      return;
+    }
 
     try {
       const response = await axios.get(
-        `http://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=5&appid=${apiKey}`
+        `http://api.openweathermap.org/geo/1.0/direct?q=${value}&limit=5&appid=${apiKey}`
       );
 
       if (response.data.length === 0) {
-        setErrorMessage("Nenhum resultado encontrado.");
-        setData(null);
+        setSuggestions([]);
         return;
       }
 
-      // Pegando o primeiro resultado (ou poderia exibir uma lista de sugestões)
-      const result = response.data[0];
-
-      const formattedData = {
-        name: result.name,
-        state: result.state || "N/A",
-        country: result.country,
-        lat: result.lat,
-        lon: result.lon,
-      };
-
-      setData(formattedData);
-      console.log("Localização encontrada:", formattedData);
+      setSuggestions(response.data);
     } catch (err) {
-      setErrorMessage("Erro ao buscar dados.");
-      console.error(
-        "Erro na API:",
-        err.response ? err.response.data : err.message
-      );
-    } finally {
-      setIsLoading(false);
+      console.error("Erro ao buscar sugestões:", err.message);
     }
   };
 
+  // Seleciona uma cidade da lista de sugestões
+  const handleSelect = (city) => {
+    setLocation(city.name);
+    setSuggestions([]);
+
+    // Envia as coordenadas para o componente pai
+    console.log({
+      name: city.name,
+      state: city.state || "N/A",
+      country: city.country,
+      lat: city.lat,
+      lon: city.lon,
+    });
+  };
+
   return (
-    <section>
+    <section className={styles.search__container}>
       <input
         type="text"
-        placeholder="Digite a cidade e pressione Enter..."
+        placeholder="Digite a cidade..."
         value={location}
         onChange={handleChange}
-        onKeyDown={handleSearch}
+        className={styles.search__bar}
       />
 
-      {isLoading && <p>Carregando...</p>}
-      {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
-
-      {data && (
-        <div>
-          <p>
-            <strong>Cidade:</strong> {data.name}
-          </p>
-          <p>
-            <strong>Estado:</strong> {data.state}
-          </p>
-          <p>
-            <strong>País:</strong> {data.country}
-          </p>
-          <p>
-            <strong>Latitude:</strong> {data.lat}
-          </p>
-          <p>
-            <strong>Longitude:</strong> {data.lon}
-          </p>
-        </div>
+      {/* Exibir sugestões dinâmicas */}
+      {suggestions.length > 0 && (
+        <ul className={styles.search__list}>
+          {suggestions.map((city, index) => (
+            <li
+              key={index}
+              onClick={() => handleSelect(city)}
+              className={styles.search__listItem}
+            >
+              {city.name}, {city.country}
+            </li>
+          ))}
+        </ul>
       )}
     </section>
   );

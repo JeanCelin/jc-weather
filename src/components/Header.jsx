@@ -3,9 +3,9 @@ import styles from './Header.module.css'
 
 export default function Header() {
   return (
-    <>
-      <p>JC WEATHER</p>
+    <header className={styles.header__container}>
+      <p className={styles.header__title}>JC WEATHER</p>
       <Search />
-    </>
+    </header>
   );
 }

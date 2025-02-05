@@ -1,0 +1,10 @@
+.header__container {
+  display: flex;
+
+  padding: 10px;
+}
+.header__title {
+  color: var(--color1);
+  font-weight: bold;
+  flex: 1;
+}
