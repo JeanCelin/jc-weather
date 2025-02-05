@@ -1,12 +1,12 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import Search from "../Search";
 
 export default function CoordinatesAPI() {
-  const [data, setData] = useState(null);
-  const [errorMessage, setErrorMessage] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
 
+  const [data, setData] = useState()
+  const [isLoading, setIsLoading] = useState(false)
+  const [errorMessage, setErrorMessage] = useState(false)
+  
   const apiKey = process.env.NEXT_PUBLIC_API_KEY;
   const cityName = "Castelo";
   const limit = 100;
@@ -30,6 +30,4 @@ export default function CoordinatesAPI() {
     };
     fetchData();
   }, []);
-
-  console.log(data);
 }

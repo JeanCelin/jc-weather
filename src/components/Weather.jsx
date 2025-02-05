@@ -49,14 +49,12 @@ export default function Weather({ data, errorMessage, isLoading }) {
     if (forecastDaysCount < 6) {
       daysCount++;
       setForecastDaysCount(daysCount);
-  
     }
   };
   const removeForecastDays = () => {
     if (forecastDaysCount > 1) {
       daysCount--;
       setForecastDaysCount(daysCount);
-    
     }
   };
   //Informações do tempo(cronológico) atual

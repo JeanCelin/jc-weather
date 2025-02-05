@@ -2,12 +2,3 @@
   display: flex;
   flex-direction: column;
 }
-
-.home__header {
-  background-color: var(--color2);
-}
-.home__content {
-  display: flex;
-  justify-content: center;
-
-}
