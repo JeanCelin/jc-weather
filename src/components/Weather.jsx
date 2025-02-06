@@ -61,7 +61,7 @@ export default function Weather({ data, errorMessage, isLoading }) {
   return (
     <div className={styles.weather__container}>
       <CoordinatesAPI />
-      <h1 className={styles.weather__place}>{data.city.name}</h1>
+   
       <div className={styles.weather__forecast}>
         <section className={styles.weather__status}>
           <Forecast

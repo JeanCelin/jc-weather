@@ -26,6 +26,18 @@ export default function Search({ onCoordinatesFound }) {
     });
   };
 
+  // Remove cidades duplicadas
+  const uniqueSuggestions = [];
+  const seen = new Set();
+
+  suggestions.forEach((city) => {
+    const cityKey = `${city.name}-${city.state}-${city.country}`;
+    if (!seen.has(cityKey)) {
+      seen.add(cityKey);
+      uniqueSuggestions.push(city);
+    }
+  });
+
   return (
     <section className={styles.search__container}>
       <h1 className={styles.search__title}>JS Weather</h1>
@@ -38,14 +50,14 @@ export default function Search({ onCoordinatesFound }) {
           className={styles.search__bar}
         />
 
-        {suggestions.length > 0 && (
+        {uniqueSuggestions.length > 0 && (
           <ul className={styles.search__list}>
-            {suggestions.map((city, index) => (
+            {uniqueSuggestions.map((city, index) => (
               <li
                 key={index}
                 onClick={() => handleSelect(city)}
                 className={styles.search__listItem}>
-                {city.name}, {city.country}
+                {`${city.name} ${city.state ? `(${city.state})` : ""}, ${city.country}`}
               </li>
             ))}
           </ul>
