@@ -3,16 +3,15 @@ import Image from "next/image";
 import styles from "./City.module.css";
 
 export default function Sun({ cityWeatherData }) {
- 
   const [sunriseTime, setSunriseTime] = useState(null);
   const [sunsetTime, setSunsetTime] = useState(null);
 
-  //Transforma o timestamp em formato de hora:minuito
+  // Transforma o timestamp em formato de hora:minuto no horário UTC
   const formatSunTime = (value, name) => {
-    const date = new Date(value * 1000);
-    const hour = date.getHours().toString().padStart(2, "0");
-    const minute = date.getMinutes().toString().padStart(2, "0");
-    return `${name}: ${hour}:${minute} (Horário de Brasília)`;
+    const date = new Date(value * 1000); // Converte timestamp para Date
+    const hour = date.getUTCHours().toString().padStart(2, "0"); // Usa getUTCHours() para hora UTC
+    const minute = date.getUTCMinutes().toString().padStart(2, "0"); // Usa getUTCMinutes() para minuto UTC
+    return `${name}: ${hour}:${minute} (Horário UTC)`; // Agora exibe como horário UTC
   };
 
   useEffect(() => {

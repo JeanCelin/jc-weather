@@ -9,21 +9,24 @@ export default function HourlyForecast({
 }) {
   const [hourlyForecast, setHourlyForecast] = useState();
 
+  // Função para formatar o timestamp em horas e minutos no formato UTC
   const formattedTime = (timeStamp) => {
-    const date = new Date(timeStamp * 1000);
-    const hours = date.getHours();
-    const minutes = date.getMinutes();
+    const date = new Date(timeStamp * 1000); // Converte o timestamp para Date
+    const hours = date.getUTCHours(); // Usa getUTCHours() para evitar o fuso horário local
+    const minutes = date.getUTCMinutes(); // Usa getUTCMinutes() para garantir a exibição no UTC
     return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(
       2,
       "0"
     )}`;
   };
 
+  // Função para lidar com a exibição dos detalhes do clima quando um item é clicado
   const handleWeatherInfo = (temp, wind, rain, snow, visibility, cloudness) => {
     updateWeatherDetails(temp, wind, rain, snow, visibility, cloudness);
   };
 
   useEffect(() => {
+    // Itera sobre o grupo de dados e procura os dados correspondentes ao dia selecionado
     groupedWeatherData.forEach((element) => {
       if (element.day == day) {
         const data = element.elements;
