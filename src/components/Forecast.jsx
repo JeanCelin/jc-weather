@@ -10,33 +10,32 @@ export default function DailyForecasts({
   const weatherData = data.list;
   const [groupedWeatherData, setGroupedWeatherData] = useState([]);
 
-  // Agrupa os dados de clima por dia
   useEffect(() => {
     const groupedWeatherByDay = {};
+  
     weatherData.forEach((element) => {
       const elementTimestamp = element.dt;
       const elementDate = new Date(elementTimestamp * 1000);
-      const elementDay = parseInt(
-        elementDate.getDate().toString().padStart(2, "0")
-      );
-      if (!groupedWeatherByDay[elementDay]) {
-        groupedWeatherByDay[elementDay] = [];
+      const elementKey = elementDate.toISOString().split("T")[0]; // Usa YYYY-MM-DD como chave
+  
+      if (!groupedWeatherByDay[elementKey]) {
+        groupedWeatherByDay[elementKey] = [];
       }
-      groupedWeatherByDay[elementDay].push(element);
+      groupedWeatherByDay[elementKey].push(element);
     });
-
-    // Converte o objeto em array de objetos com day e elements
+  
+    // Converte o objeto em array e ordena corretamente pela data
     const groupedWeatherArray = Object.entries(groupedWeatherByDay)
-      .map(([day, elements]) => ({
-        day,
+      .map(([date, elements]) => ({
+        day: new Date(date).getDate(), // Extrai apenas o número do dia
         elements,
       }))
+      .sort((a, b) => new Date(a.elements[0].dt * 1000) - new Date(b.elements[0].dt * 1000)) // Ordena por timestamp
       .slice(0, days);
-
-
-    // Atualiza o estado com o array agrupado
+  
     setGroupedWeatherData(groupedWeatherArray);
   }, [data, days]);
+  
 
   return (
     <div className={styles.forecast__container}>
@@ -49,11 +48,3 @@ export default function DailyForecasts({
   );
 }
 
-/* corrigir o problema, de que quando o mes está acabando a ordem dos dias inverter exemplo:
-  01 (Fevereiro)
-  02 (Fevereiro)
-  28 (Janeiro)
-  29 (Janeiro)
-  30 (Janeiro)
-  31 (Janeiro)
-*/
