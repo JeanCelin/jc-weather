@@ -1,0 +1,5 @@
+@media (min-width: 476px) {
+  .forecast__container {
+    width: 435px;
+  }
+}

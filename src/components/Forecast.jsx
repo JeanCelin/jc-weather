@@ -39,11 +39,13 @@ export default function DailyForecasts({
   }, [data, days]);
 
   return (
+    <div className={styles.forecast__container}>
     <DailyForecast
       groupedWeatherData={groupedWeatherData}
       days={days}
       updateWeatherDetails={updateWeatherDetails}
-    />
+      />
+      </div>
   );
 }
 

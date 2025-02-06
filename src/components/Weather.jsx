@@ -13,7 +13,7 @@ export default function Weather({ data, errorMessage, isLoading }) {
   if (isLoading) return <p>Carregando...</p>;
   if (errorMessage) return <p>Erro: {errorMessage}</p>;
 
-  const [forecastDaysCount, setForecastDaysCount] = useState(1);
+  const [forecastDaysCount, setForecastDaysCount] = useState(5);
   const [city, setCity] = useState(data.city);
   const [temp, setTemp] = useState(data.list[0].main);
   const [wind, setWind] = useState(data.list[0].wind);

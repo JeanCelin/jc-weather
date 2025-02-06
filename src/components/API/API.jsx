@@ -24,7 +24,7 @@ export default function API() {
       lat: data.lat,
       lon: data.lon,
     });
-    console.log(data)
+    console.log(data);
   };
 
   // Obtém a localização do usuário ou usa Brasília como fallback
@@ -56,7 +56,7 @@ export default function API() {
 
         if (response.data.length > 0) {
           const { name, state, country } = response.data[0];
-          setLocation({ city: name, state: state || "N/A", country });
+          setLocation({ city: name, state: state, country });
         }
       } catch (err) {
         console.error("Erro ao buscar nome da cidade:", err.message);
@@ -93,7 +93,17 @@ export default function API() {
   return (
     <div>
       <Search onCoordinatesFound={handleCoordinates} />
-      <h1>{`${location.city} (${location.state}), ${location.country}`}</h1>
+      <h1
+        style={{
+          fontSize: "1.1em",
+          marginTop: "15px",
+          paddingLeft: "10px",
+          textAlign: "center",
+        }}>
+        {location.city} {location.state ? `(${location.state})` : ""},{" "}
+        {location.country}
+      </h1>
+
       <Weather data={data} errorMessage={errorMessage} isLoading={isLoading} />
     </div>
   );

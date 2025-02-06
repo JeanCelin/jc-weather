@@ -20,7 +20,7 @@ export default function Search({ onCoordinatesFound }) {
 
     onCoordinatesFound({
       name: city.name,
-      state: city.state || "N/A",
+      state: city.state,
       country: city.country,
       lat: city.lat,
       lon: city.lon,
