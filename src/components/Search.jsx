@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import useLocationApi from "./API/useLocationApi"; // Importando o hook
 import styles from "./Search.module.css";
 
 export default function Search({ onCoordinatesFound }) {
   const [location, setLocation] = useState("");
+  const [uniqueSuggestions, setUniqueSuggestions] = useState([]);
   const { suggestions, fetchCities } = useLocationApi();
 
   // Atualiza o estado e chama a API ao digitar
@@ -24,19 +25,24 @@ export default function Search({ onCoordinatesFound }) {
       lat: city.lat,
       lon: city.lon,
     });
+
+    setUniqueSuggestions([]); // Limpa as sugestões após a seleção
   };
 
-  // Remove cidades duplicadas
-  const uniqueSuggestions = [];
-  const seen = new Set();
+  // Atualiza uniqueSuggestions sem duplicatas
+  useEffect(() => {
+    const seen = new Set();
+    const filteredSuggestions = suggestions.filter((city) => {
+      const cityKey = `${city.name}-${city.state}-${city.country}`;
+      if (!seen.has(cityKey)) {
+        seen.add(cityKey);
+        return true;
+      }
+      return false;
+    });
 
-  suggestions.forEach((city) => {
-    const cityKey = `${city.name}-${city.state}-${city.country}`;
-    if (!seen.has(cityKey)) {
-      seen.add(cityKey);
-      uniqueSuggestions.push(city);
-    }
-  });
+    setUniqueSuggestions(filteredSuggestions);
+  }, [suggestions]);
 
   return (
     <section className={styles.search__container}>
@@ -62,6 +68,7 @@ export default function Search({ onCoordinatesFound }) {
             ))}
           </ul>
         )}
+      
       </div>
     </section>
   );
