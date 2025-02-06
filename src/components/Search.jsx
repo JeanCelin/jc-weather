@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import useLocationApi from "./API/useLocationApi"; // Importando o hook
 import styles from "./Search.module.css";
 
@@ -14,6 +15,11 @@ export default function Search({ onCoordinatesFound }) {
     fetchCities(value); // Chama a API
   };
 
+  const handleClear = ()=>{
+    setUniqueSuggestions([])
+    setLocation("")
+
+  }
   // Seleciona uma cidade da lista de sugestões
   const handleSelect = (city) => {
     setLocation(city.name);
@@ -68,7 +74,9 @@ export default function Search({ onCoordinatesFound }) {
             ))}
           </ul>
         )}
-      
+      <div className={styles.search__clear} onClick={()=>handleClear()}>
+        <Image src={'/clear.png'} width={16} height={16} alt="clear icon"/>
+      </div>
       </div>
     </section>
   );
