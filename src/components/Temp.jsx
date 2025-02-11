@@ -1,15 +1,14 @@
 import Image from "next/image";
 import styles from "./Temp.module.css";
 
-export default function Temp({ tempWeatherData }) {
+import TempWarning from "./TempWarning";
 
+export default function Temp({ tempWeatherData }) {
   return (
     <section className={styles.temp__container}>
       <div className={styles.temp__titleContainer}>
         <h3 className={styles.temp__title}>Temperature</h3>
-        <div style={{ display: "flex", gap: "5px" }}>
-          <Image src={"/info.png"} width={14} height={14} alt="info icon" />
-        </div>
+        <TempWarning top="20px" left="-90px" />
       </div>
       <div className={styles.temp__info}>
         <p>Temp: {parseInt(tempWeatherData.temp)}°C</p>

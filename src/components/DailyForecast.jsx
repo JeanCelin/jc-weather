@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import HourlyForecast from "./HourlyForecast";
 import styles from "./DailyForecast.module.css";
+import TempWarning from "./TempWarning";
 
 export default function DailyForecast({
   groupedWeatherData,
@@ -85,23 +86,26 @@ export default function DailyForecast({
                   <p>Feels like: {temp.feels_like}°C</p>
                 </div>
                 <div className={styles.dailyForecast__tempVariationContainer}>
-                  <div className={styles.dailyForecast__tempVariation}>
-                    <Image
-                      src={"/arrow_max.png"}
-                      width={16}
-                      height={16}
-                      alt="arrow max"
-                    />
-                    <p>{temp.temp_max}°C</p>
-                  </div>
-                  <div className={styles.dailyForecast__tempVariation}>
-                    <Image
-                      src={"/arrow_min.png"}
-                      width={16}
-                      height={16}
-                      alt="arrow min"
-                    />
-                    <p>{temp.temp_min}°C</p>
+                  <TempWarning top={"50%"} right={"-150px"} />
+                  <div>
+                    <div className={styles.dailyForecast__tempVariation}>
+                      <Image
+                        src={"/arrow_max.png"}
+                        width={16}
+                        height={16}
+                        alt="arrow max"
+                      />
+                      <p>{temp.temp_max}°C</p>
+                    </div>
+                    <div className={styles.dailyForecast__tempVariation}>
+                      <Image
+                        src={"/arrow_min.png"}
+                        width={16}
+                        height={16}
+                        alt="arrow min"
+                      />
+                      <p>{temp.temp_min}°C</p>
+                    </div>
                   </div>
                 </div>
               </section>

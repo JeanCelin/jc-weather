@@ -35,7 +35,7 @@
   left: -16px;
   color: white;
   background-color: var(--color2);
-  box-shadow: 0px 2px 8px 0px #0000005c
+  box-shadow: 0px 2px 8px 0px #0000005c;
 }
 
 .dailyForecast__day_shortPosition {
@@ -75,6 +75,10 @@
 
 .dailyForecast__tempVariationContainer {
   min-width: 118px;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: center;
+  gap: 5px;
 }
 .dailyForecast__tempVariation {
   display: flex;
