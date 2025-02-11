@@ -4,7 +4,6 @@
   flex-wrap: wrap;
   max-width: 900px;
   margin: auto;
-
 }
 .weather__status {
   display: flex;
@@ -51,6 +50,13 @@
 .weather__icon:hover {
   background-color: var(--color3);
   transition: ease-in 300ms;
+}
+.weather__userWarnings {
+  text-align: center;
+  font-size: 1em;
+  color: red;
+
+  text-transform: uppercase;
 }
 
 @media (max-width: 965px) {

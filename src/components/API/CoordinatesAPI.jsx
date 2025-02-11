@@ -9,7 +9,7 @@ export default function CoordinatesAPI() {
   
   const apiKey = process.env.NEXT_PUBLIC_API_KEY;
   const cityName = "Castelo";
-  const limit = 100;
+  const limit = 15;
 
   useEffect(() => {
     const fetchData = async () => {

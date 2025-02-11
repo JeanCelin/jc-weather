@@ -8,10 +8,14 @@ import WeatherConditions from "./WeatherConditions";
 import Forecast from "./Forecast";
 import CoordinatesAPI from "./API/CoordinatesAPI";
 
-export default function Weather({ data, errorMessage, isLoading }) {
+export default function Weather({ data, errorMessage, isLoading, waiting }) {
   //Testa a requisição e retorforecastDaysCountna se der erro
-  if (isLoading) return <p>Carregando...</p>;
-  if (errorMessage) return <p>Erro: {errorMessage}</p>;
+  if (waiting)
+    return <p className={styles.weather__userWarnings}>Waiting user location...</p>;
+  if (isLoading)
+    return <p className={styles.weather__userWarnings}>Carregando...</p>;
+  if (errorMessage)
+    return <p className={styles.weather__userWarnings}>Erro: {errorMessage}</p>;
 
   const [forecastDaysCount, setForecastDaysCount] = useState(5);
   const [city, setCity] = useState(data.city);

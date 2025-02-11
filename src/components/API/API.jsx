@@ -8,6 +8,7 @@ export default function API() {
   const [errorMessage, setErrorMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [coordinates, setCoordinates] = useState(null);
+  const [waiting, setWaiting] = useState(true);
   const [location, setLocation] = useState({
     city: "Brasília",
     state: "DF",
@@ -32,6 +33,7 @@ export default function API() {
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
+    
           setCoordinates({
             lat: position.coords.latitude,
             lon: position.coords.longitude,
@@ -71,6 +73,7 @@ export default function API() {
     if (!coordinates) return;
 
     const fetchData = async () => {
+      setWaiting(false);
       setIsLoading(true);
       setErrorMessage(null);
 
@@ -104,7 +107,12 @@ export default function API() {
         {location.country}
       </h1>
 
-      <Weather data={data} errorMessage={errorMessage} isLoading={isLoading} />
+      <Weather
+        data={data}
+        errorMessage={errorMessage}
+        isLoading={isLoading}
+        waiting={waiting}
+      />
     </div>
   );
 }
