@@ -99,9 +99,13 @@ export default function API() {
       <h1
         style={{
           fontSize: "1.1em",
-          marginTop: "15px",
-          paddingLeft: "10px",
+          margin: " 15px auto 0",
+          padding: "5px",
           textAlign: "center",
+          backgroundColor: "var(--color2)",
+          color: "var(--color1)",
+          maxWidth: "660px",
+          boxShadow: "#0000006b 1px 1px 2px 0px"
         }}>
         {location.city} {location.state ? `(${location.state})` : ""},{" "}
         {location.country}

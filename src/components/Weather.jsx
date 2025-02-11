@@ -9,7 +9,7 @@ import Forecast from "./Forecast";
 import CoordinatesAPI from "./API/CoordinatesAPI";
 
 export default function Weather({ data, errorMessage, isLoading, waiting }) {
-  //Testa a requisição e retorforecastDaysCountna se der erro
+  //Testa a requisição e retora se der erro
   if (waiting)
     return <p className={styles.weather__userWarnings}>Waiting user location...</p>;
   if (isLoading)
@@ -98,7 +98,7 @@ export default function Weather({ data, errorMessage, isLoading, waiting }) {
         </section>
 
         <section className={styles.weather__infoContainer}>
-          <h2>Others Informations:</h2>
+          <h2 className={styles.weather__infoTitle}>Others Informations:</h2>
           <div className={styles.weather__info}>
             <Temp tempWeatherData={temp} />
             <Wind windWeatherData={wind} />
