@@ -15,11 +15,10 @@ export default function Search({ onCoordinatesFound }) {
     fetchCities(value); // Chama a API
   };
 
-  const handleClear = ()=>{
-    setUniqueSuggestions([])
-    setLocation("")
-
-  }
+  const handleClear = () => {
+    setUniqueSuggestions([]);
+    setLocation("");
+  };
   // Seleciona uma cidade da lista de sugestões
   const handleSelect = (city) => {
     setLocation(city.name);
@@ -56,7 +55,7 @@ export default function Search({ onCoordinatesFound }) {
       <div className={styles.search__content}>
         <input
           type="text"
-          placeholder="Digite a cidade..."
+          placeholder="Enter city..."
           value={location}
           onChange={handleChange}
           className={styles.search__bar}
@@ -69,14 +68,16 @@ export default function Search({ onCoordinatesFound }) {
                 key={index}
                 onClick={() => handleSelect(city)}
                 className={styles.search__listItem}>
-                {`${city.name} ${city.state ? `(${city.state})` : ""}, ${city.country}`}
+                {`${city.name} ${city.state ? `(${city.state})` : ""}, ${
+                  city.country
+                }`}
               </li>
             ))}
           </ul>
         )}
-      <div className={styles.search__clear} onClick={()=>handleClear()}>
-        <Image src={'/clear.png'} width={16} height={16} alt="clear icon"/>
-      </div>
+        <div className={styles.search__clear} onClick={() => handleClear()}>
+          <Image src={"/clear.png"} width={16} height={16} alt="clear icon" />
+        </div>
       </div>
     </section>
   );

@@ -1,12 +1,14 @@
 import styles from "@/styles/Home.module.css";
 import API from "@/components/API/API";
+import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
-    <>
-      <main className={styles.home__content}>
+    <div className={styles.home__container}>
+      <main className={styles.home__mainContainer}>
         <API />
       </main>
-    </>
+      <Footer />
+    </div>
   );
 }
