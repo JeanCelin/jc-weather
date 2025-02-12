@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import useLocationApi from "./hooks/useCitySearch"; 
+import useLocationApi from "./hooks/useCitySearch";
 import styles from "./Search.module.css";
 
 export default function Search({ onCoordinatesFound }) {
@@ -9,7 +9,7 @@ export default function Search({ onCoordinatesFound }) {
   const { suggestions, fetchCities } = useLocationApi(); // Using the custom hook to fetch cities (Usando o hook personalizado para buscar cidades)
 
   // Updates state and calls the API when user types (Atualiza o estado e chama a API ao digitar)
-  
+
   const handleChange = (e) => {
     const value = e.target.value;
     setLocation(value);
@@ -61,6 +61,7 @@ export default function Search({ onCoordinatesFound }) {
           value={location}
           onChange={handleChange} // Calls handleChange when the input changes (Chama handleChange quando o campo é alterado)
           className={styles.search__bar}
+          autoComplete="none"
         />
 
         {uniqueSuggestions.length > 0 && ( // Renders the suggestions list if there are any (Renderiza a lista de sugestões se houver sugestões)
