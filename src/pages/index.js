@@ -1,5 +1,5 @@
 import styles from "@/styles/Home.module.css";
-import API from "@/components/API/API";
+import API from "@/components/WeatherDataFetcher";
 import Footer from "@/components/Footer";
 
 export default function Home() {

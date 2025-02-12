@@ -1,40 +1,80 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+# JS Weather - Sistema de Previsão do Tempo
 
-## Getting Started
+## 1. Introdução
 
-First, run the development server:
+O **JS Weather** é um sistema de previsão do tempo desenvolvido utilizando tecnologias web modernas. O sistema permite que os usuários busquem informações meteorológicas de qualquer cidade ao inserir seu nome. O funcionamento do sistema se baseia no consumo de duas APIs distintas: uma para obter as coordenadas geográficas da cidade pesquisada e outra para recuperar os dados climáticos da região correspondente.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## 2. Objetivo
+
+O projeto tem como objetivo fornecer um meio intuitivo e eficiente para consulta de previsões meteorológicas, facilitando o acesso a informações climáticas de diferentes localidades.
+
+## 3. Tecnologias Utilizadas
+
+- **JavaScript (ES6+)** - Linguagem principal para manipulação de dados e interação do usuário.
+- **HTML5** - Estruturação da interface do usuário.
+- **CSS3** - Estilização e responsividade do sistema.
+- **Next.js** - Framework para desenvolvimento web utilizando React.
+- **Axios** - Biblioteca para requisições HTTP.
+- **Git** - Controle de versão do projeto.
+- **GitHub** - Hospedagem do repositório e colaboração.
+- **Vercel** - Plataforma para implantação contínua do projeto.
+- **APIs OpenWeather**:
+  - **Geocoding API**: Responsável por converter o nome da cidade inserida pelo usuário em coordenadas geográficas (latitude e longitude).
+  - **5 Days Forecast API**: Fornece previsão do tempo baseada nas coordenadas geográficas obtidas.
+
+## 4. Funcionamento do Sistema
+
+1. O usuário insere o nome da cidade no campo de busca.
+2. O sistema faz uma requisição à **Geocoding API**, que retorna a latitude e longitude da cidade.
+3. Essas coordenadas são utilizadas para fazer uma nova requisição à **5 Days Forecast API**, que retorna os dados meteorológicos correspondentes.
+4. As informações climáticas (temperatura, umidade, velocidade do vento, entre outras) são exibidas na interface do usuário de maneira organizada e intuitiva.
+
+## 5. Estrutura do Projeto
+
+```
+JS-Weather/
+│-- public/       # Recursos públicos como ícones e imagens
+│-- src/          # Código-fonte principal
+│   ├── components/  # Componentes reutilizáveis
+|-- |-- ├── hooks/      # Hooks personalizados
+│   ├── styles/      # Estilização em CSS
+│-- pages/        # Páginas do site
+|-- ├── index.html    # Estrutura da página
+│   ├── index.js      # Componente principal
+│-- package.json  # Dependências e scripts do projeto
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 6. Instalação e Execução
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+### 6.1. Requisitos
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+- Node.js instalado (para uso de pacotes, se necessário)
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+### 6.2. Clonando o repositório
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```sh
+git clone https://github.com/JeanCelin/jc-weather.git
+cd jc-weather
+```
 
-## Learn More
+### 6.3. Instalando dependências (se aplicável)
 
-To learn more about Next.js, take a look at the following resources:
+```sh
+npm install
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
+### 6.4. Executando o projeto
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```sh
+npm start
+```
 
-## Deploy on Vercel
+## 7. Licenciamento
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+O código deste projeto é de uso livre, podendo ser modificado e distribuído conforme desejado. No entanto, os direitos e termos de uso das APIs utilizadas devem ser consultados diretamente com os provedores de serviço.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+## 8. Desenvolvedor
+
+- **Jean Celin** - Desenvolvedor Front-End
+- Contato: [LinkedIn](https://www.linkedin.com/in/jean-celin/) | [GitHub](https://github.com/JeanCelin) | [Portfólio](https://jeancelin.vercel.app/)
+

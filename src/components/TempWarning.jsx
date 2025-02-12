@@ -4,15 +4,22 @@ import styles from "./TempWarning.module.css";
 
 export default function TempWarning({ top, right, bottom, left }) {
   const [showMessage, setShowMessage] = useState(false);
+
+  // Handles showing the message when mouse enters the icon (Lida com a exibição da mensagem quando o mouse entra no ícone)
   const handleMouseEnter = () => {
     setShowMessage(true);
   };
+
+  // Handles hiding the message when mouse leaves the icon (Lida com o fechamento da mensagem quando o mouse sai do ícone)
   const handleMouseLeave = () => {
     setShowMessage(false);
   };
+
+  // Toggles the message visibility when the icon is clicked (Alterna a visibilidade da mensagem quando o ícone é clicado)
   const handleMouseClick = () => {
     setShowMessage(!showMessage);
   };
+
   return (
     <div className={styles.tempWarning__container}>
       {showMessage && (
@@ -22,9 +29,9 @@ export default function TempWarning({ top, right, bottom, left }) {
             position: "absolute",
             zIndex: "3",
             top: top,
-            right: right, 
-            bottom: bottom,  
-            left: left,  
+            right: right, // Custom position (Posição personalizada)
+            bottom: bottom, // Custom position (Posição personalizada)
+            left: left, // Custom position (Posição personalizada)
           }}>
           The minimum and maximum temperatures show the lowest and highest
           temperatures in the city right now, just for your reference. These

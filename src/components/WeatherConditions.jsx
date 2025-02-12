@@ -7,33 +7,36 @@ export default function WeatherConditions({
   visibility,
   cloudness,
 }) {
-  const [isRain, setIsRain] = useState(false);
-  const [isSnow, setIsSnow] = useState(false);
-  const [isVisibility, setIsVisibility] = useState(false);
-  const [isCloudness, setIsCloudness] = useState(false);
+  // stores if the respective data is available (armazena caso os respectivos dados estão disponiveis)
+  const [isRain, setIsRain] = useState(false); 
+  const [isSnow, setIsSnow] = useState(false); 
+  const [isVisibility, setIsVisibility] = useState(false); 
+  const [isCloudness, setIsCloudness] = useState(false); 
 
-  // Atualiza o estado com base no valor fornecido
+
+  // Updates the state based on the value provided (Atualiza o estado com base no valor fornecido)
   const updateConditionState = (value, setState) => {
-    if (value !== undefined) {  // Verifica se o valor não é undefined
-      setState(true);
+    if (value !== undefined) {  // Checks if the value is not undefined (Verifica se o valor não é undefined)
+      setState(true); // Sets the state to true (Define o estado como verdadeiro)
     }
   };
 
   useEffect(() => {
-    updateConditionState(rain, setIsRain);
-    updateConditionState(snow, setIsSnow);
-    updateConditionState(visibility, setIsVisibility);
-    updateConditionState(cloudness, setIsCloudness);
+    // Updates the datas state
+    updateConditionState(rain, setIsRain); 
+    updateConditionState(snow, setIsSnow); 
+    updateConditionState(visibility, setIsVisibility); 
+    updateConditionState(cloudness, setIsCloudness); 
+    console.log(snow)
   }, [rain, snow, visibility, cloudness]);
 
   return (
     <section className={styles.weatherConditions__container}>
       <h3 className={styles.weatherConditions__title}>Weather Conditions</h3>
-      {/* Condições só são exibidas se as variáveis correspondentes forem true */}
-      {isRain && rain?.["3h"] !== undefined && <p>{`Rain vol for last 3h: ${rain["3h"]} mm`}</p>}
-      {isSnow && snow !== undefined && <p>{`Snow vol for last 3h: ${snow} mm`}</p>}
-      {isVisibility && visibility !== undefined && <p>{`Visibility: ${visibility} metres`}</p>}
-      {isCloudness && cloudness !== undefined && <p>{`Cloudness: ${cloudness}%`}</p>}
+      {isRain && rain?.["3h"] !== undefined && <p>{`Rain vol for last 3h: ${rain["3h"]} mm`}</p>} {/* Displays rain volume for the last 3 hours (Exibe o volume de chuva nas últimas 3 horas) */}
+      {isSnow && snow?.["3h"] !== undefined && <p>{`Snow vol for last 3h: ${snow["3h"]} mm`}</p>} {/* Displays snow volume for the last 3 hours (Exibe o volume de neve nas últimas 3 horas) */}
+      {isVisibility && visibility !== undefined && <p>{`Visibility: ${visibility} metres`}</p>} {/* Displays visibility (Exibe a visibilidade) */}
+      {isCloudness && cloudness !== undefined && <p>{`Cloudness: ${cloudness}%`}</p>} {/* Displays cloudiness percentage (Exibe a porcentagem de nuvens) */}
     </section>
   );
 }
