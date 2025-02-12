@@ -19,7 +19,7 @@ export default function useCitySearch() {
 
     try {
       const response = await axios.get( // Make the API request (Fazer a solicitação à API)
-        `http://api.openweathermap.org/geo/1.0/direct?q=${query}&limit=5&appid=${apiKey}`
+        `https://api.openweathermap.org/geo/1.0/direct?q=${query}&limit=5&appid=${apiKey}`
       );
 
       setSuggestions(response.data.length > 0 ? response.data : []); // Set suggestions based on API response (Definir sugestões com base na resposta da API).

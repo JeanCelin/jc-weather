@@ -30,7 +30,7 @@ export default function Home() {
           content="Stay updated with the most precise weather forecasts in real-time."
         />
         <meta property="og:image" content="/jc-weather.png" />
-        <meta property="og:url" content="https://www.jcweather.com" />{" "}
+        <meta property="og:url" content="https://jc-weather.vercel.app/" />{" "}
         {/*alterar para o link certo*/}
         <meta property="og:type" content="website" />
         {/* Twitter Card */}
