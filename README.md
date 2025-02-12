@@ -1,4 +1,90 @@
+# JC Weather - Weather Forecast System
+**v1.0.0**
+## 1. Introduction
+
+**JC Weather** is a weather forecast system developed using modern web technologies. The system allows users to search for weather information for any city by entering its name. It operates by consuming two distinct APIs: one to obtain the geographical coordinates of the searched city and another to retrieve the corresponding weather data.
+
+## 2. Objective
+
+The project's goal is to provide an intuitive and efficient way to check weather forecasts, making it easier to access climate information for different locations.
+
+## 3. Technologies Used
+
+- **JavaScript (ES6+)** - Main language for data manipulation and user interaction.
+- **HTML5** - Structure of the user interface.
+- **CSS3** - Styling and system responsiveness.
+- **Next.js** - Framework for web development using React.
+- **Axios** - Library for making HTTP requests.
+- **Git** - Version control system.
+- **GitHub** - Repository hosting and collaboration.
+- **Vercel** - Platform for continuous deployment.
+- **OpenWeather APIs**:
+  - **Geocoding API**: Converts the city name entered by the user into geographical coordinates (latitude and longitude).
+  - **5 Days Forecast API**: Provides a weather forecast based on the obtained geographical coordinates.
+
+## 4. System Functionality
+
+1. The user enters the city name in the search field.
+2. The system makes a request to the **Geocoding API**, which returns the city's latitude and longitude.
+3. These coordinates are used to make another request to the **5 Days Forecast API**, which returns the corresponding weather data.
+4. Weather information (temperature, humidity, wind speed, etc.) is displayed in an organized and intuitive interface.
+
+## 5. Project Structure
+
+```
+JC-Weather/
+│-- public/       # Public resources like icons and images
+│-- src/          # Main source code
+│   ├── components/  # Reusable components
+│   ├── hooks/       # Custom hooks
+│   ├── styles/      # CSS styling
+│-- pages/        # Website pages
+│   ├── index.html    # Page structure
+│   ├── index.js      # Main component
+│-- package.json  # Project dependencies and scripts
+```
+
+## 6. Installation and Execution
+
+### 6.1. Requirements
+
+- Node.js installed (for package management if needed)
+
+### 6.2. Cloning the Repository
+
+```sh
+git clone https://github.com/JeanCelin/jc-weather.git
+cd jc-weather
+```
+
+### 6.3. Installing Dependencies (if applicable)
+
+```sh
+npm install
+```
+
+### 6.4. Running the Project
+
+```sh
+npm start
+```
+
+## 7. Licensing
+
+The code for this project is freely available for modification and distribution. However, the rights and terms of use of the utilized APIs should be checked directly with the service providers.
+
+## 8. Developer
+
+- **Jean Celin** - Front-End Developer
+- Contact: [LinkedIn](https://www.linkedin.com/in/jean-celin/) | [GitHub](https://github.com/JeanCelin) | [Portfolio](https://jeancelin.vercel.app/)
+
+
+---
+---
+---
+
 # JS Weather - Sistema de Previsão do Tempo
+**v1.0.0**
 
 ## 1. Introdução
 
@@ -77,4 +163,6 @@ O código deste projeto é de uso livre, podendo ser modificado e distribuído c
 
 - **Jean Celin** - Desenvolvedor Front-End
 - Contato: [LinkedIn](https://www.linkedin.com/in/jean-celin/) | [GitHub](https://github.com/JeanCelin) | [Portfólio](https://jeancelin.vercel.app/)
+
+
 

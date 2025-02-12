@@ -27,7 +27,6 @@ export default function WeatherConditions({
     updateConditionState(snow, setIsSnow); 
     updateConditionState(visibility, setIsVisibility); 
     updateConditionState(cloudness, setIsCloudness); 
-    console.log(snow)
   }, [rain, snow, visibility, cloudness]);
 
   return (

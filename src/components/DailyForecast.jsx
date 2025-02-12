@@ -77,7 +77,7 @@ export default function DailyForecast({
                     height={16}
                     alt="water drop"
                   />
-                  <p>{dataDaily.pop * 100}%</p> {/* Display precipitation probability (Exibe a probabilidade de precipitação) */}
+                  <p>{parseInt(dataDaily.pop * 100)}%</p> {/* Display precipitation probability (Exibe a probabilidade de precipitação) */}
                 </div>
               </section>
               <section className={styles.dailyForecast__tempContainer}>
