@@ -13,20 +13,6 @@ export default function Search({ onCoordinatesFound }) {
   // Using the custom hook to fetch cities (Usando o hook personalizado para buscar cidades)
   const { suggestions, fetchCities } = useLocationApi(); 
   
-  // Reference to the search input (Referência para o input de busca)
-  const searchRef = useRef(null);
-
-  // Shows suggestions when the input is clicked (Exibe as sugestões ao clicar no input)
-  const handleClick = () => {
-    setUniqueSuggestions(suggestions);
-  };
-
-  // Hides suggestions when clicking outside the search area (Oculta as sugestões ao clicar fora da área de busca)
-  const handleClickOutside = (event) => {
-    if (searchRef.current && !searchRef.current.contains(event.target)) {
-      setUniqueSuggestions([]);
-    }
-  };
 
   // Updates state and calls the API when user types (Atualiza o estado e chama a API ao digitar)
   const handleChange = (e) => {
@@ -56,13 +42,7 @@ export default function Search({ onCoordinatesFound }) {
     setUniqueSuggestions([]);
   };
 
-  // Adds an event listener to detect clicks outside the search box (Adiciona um evento para detectar cliques fora da caixa de busca)
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+
 
   // Updates uniqueSuggestions without duplicates (Atualiza uniqueSuggestions sem duplicatas)
   useEffect(() => {
@@ -84,7 +64,6 @@ export default function Search({ onCoordinatesFound }) {
       <h1 className={styles.search__title}>JC Weather</h1>
       <div className={styles.search__content} >
         <input
-          ref={searchRef}
           type="text"
           placeholder="Enter city..."
           value={location}
