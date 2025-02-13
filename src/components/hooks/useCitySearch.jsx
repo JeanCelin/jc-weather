@@ -10,16 +10,11 @@ export default function useCitySearch() {
 
   // Function to fetch cities from the API (Função para buscar cidades na API)
   const fetchCities = async (query) => {
-    if (query.length < 2) { // If the query is too short, do not make the API call (Se a consulta for muito curta, não faça a chamada à API).
-      setSuggestions([]); // Reset suggestions (Resetar as sugestões).
-      return;
-    }
-
     setIsLoading(true); // Set loading state to true (Define o estado de carregamento como verdadeiro).
 
     try {
       const response = await axios.get( // Make the API request (Fazer a solicitação à API)
-        `http://api.openweathermap.org/geo/1.0/direct?q=${query}&limit=5&appid=${apiKey}`
+        `https://api.openweathermap.org/geo/1.0/direct?q=${query}&limit=5&appid=${apiKey}`
       );
 
       setSuggestions(response.data.length > 0 ? response.data : []); // Set suggestions based on API response (Definir sugestões com base na resposta da API).

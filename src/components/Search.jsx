@@ -54,19 +54,22 @@ export default function Search({ onCoordinatesFound }) {
   return (
     <section className={styles.search__container}>
       <h1 className={styles.search__title}>JC Weather</h1>
-      <div className={styles.search__content}>
+      <div className={styles.search__content} >
         <input
           type="text"
           placeholder="Enter city..."
           value={location}
           onChange={handleChange} // Calls handleChange when the input changes (Chama handleChange quando o campo é alterado)
+          
           className={styles.search__bar}
+          autoComplete="none"
         />
 
         {uniqueSuggestions.length > 0 && ( // Renders the suggestions list if there are any (Renderiza a lista de sugestões se houver sugestões)
           <ul className={styles.search__list}>
             {uniqueSuggestions.map((city, index) => (
               <li
+        
                 key={index}
                 onClick={() => handleSelect(city)} // Calls handleSelect when a city is clicked (Chama handleSelect quando uma cidade é clicada)
                 className={styles.search__listItem}>

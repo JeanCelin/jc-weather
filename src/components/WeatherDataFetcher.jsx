@@ -53,7 +53,7 @@ export default function WeatherDataFetcher() {
     const fetchCityName = async () => {
       try {
         const response = await axios.get(
-          `http://api.openweathermap.org/geo/1.0/reverse?lat=${coordinates.lat}&lon=${coordinates.lon}&limit=1&appid=${apiKey}`
+          `https://api.openweathermap.org/geo/1.0/reverse?lat=${coordinates.lat}&lon=${coordinates.lon}&limit=1&appid=${apiKey}`
         );
 
         if (response.data.length > 0) {
