@@ -21,7 +21,7 @@ export default function Footer() {
         <p>
           The code is free for use and modification. API rights should be checked directly with the owners.
         </p>
-        <p>Developed by Jean Celin - 2025</p>
+        <p>Developed by Jean Celin, 2025</p>
       </div>
     </footer>
   );

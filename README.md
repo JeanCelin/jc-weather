@@ -1,5 +1,5 @@
 # JC Weather - Weather Forecast System
-**v1.0.2**
+**v1.0.3**
 ## 1. Introduction
 
 **JC Weather** is a weather forecast system developed using modern web technologies. The system allows users to search for weather information for any city by entering its name. It operates by consuming two distinct APIs: one to obtain the geographical coordinates of the searched city and another to retrieve the corresponding weather data.
@@ -84,7 +84,7 @@ The code for this project is freely available for modification and distribution.
 ---
 
 # JS Weather - Sistema de Previsão do Tempo
-**v1.0.2**
+**v1.0.3**
 
 ## 1. Introdução
 

@@ -10,11 +10,7 @@ export default function useCitySearch() {
 
   // Function to fetch cities from the API (Função para buscar cidades na API)
   const fetchCities = async (query) => {
-    if (query.length < 2) { // If the query is too short, do not make the API call (Se a consulta for muito curta, não faça a chamada à API).
-      setSuggestions([]); // Reset suggestions (Resetar as sugestões).
-      return;
-    }
-
+    
     setIsLoading(true); // Set loading state to true (Define o estado de carregamento como verdadeiro).
 
     try {
