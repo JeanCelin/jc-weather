@@ -1,7 +1,7 @@
 import Head from "next/head";
 
 import styles from "@/styles/Home.module.css";
-import API from "@/components/WeatherDataFetcher";
+import WeatherDataFetcher from "@/components/WeatherDataFetcher";
 import Footer from "@/components/Footer";
 
 export default function Home() {
@@ -43,7 +43,7 @@ export default function Home() {
         <meta name="twitter:image" content="/weather-banner.png" />
       </Head>
       <main className={styles.home__mainContainer}>
-        <API />
+        <WeatherDataFetcher />
       </main>
       <Footer />
     </div>

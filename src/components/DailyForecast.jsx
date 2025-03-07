@@ -8,6 +8,7 @@ export default function DailyForecast({
   groupedWeatherData,
   updateWeatherDetails,
 }) {
+
   const [openDays, setOpenDays] = useState({}); // New state to track which days are open (Novo estado para rastrear quais dias estão abertos)
 
   // Function that toggles the state for a specific day (Função que altera o estado para o dia específico)
