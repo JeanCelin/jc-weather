@@ -16,7 +16,7 @@ export default function useCitySearch() {
       const response = await axios.get( // Make the API request (Fazer a solicitação à API)
         `https://api.openweathermap.org/geo/1.0/direct?q=${query}&limit=5&appid=${apiKey}`
       );
-
+      console.log(response)
       setSuggestions(response.data.length > 0 ? response.data : []); // Set suggestions based on API response (Definir sugestões com base na resposta da API).
     } catch (err) {
       setErrorMessage("Erro ao buscar sugestões."); // Set error message in case of failure (Definir mensagem de erro em caso de falha).
