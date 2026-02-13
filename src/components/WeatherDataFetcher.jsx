@@ -1,9 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-
 import Weather from "@/components/Weather";
-import Search from "./Search"; 
+import Search from "./Search";
 
 export default function WeatherDataFetcher() {
   const [data, setData] = useState(null); // Stores weather data (Armazena os dados meteorológicos)
@@ -29,22 +28,28 @@ export default function WeatherDataFetcher() {
     });
   };
 
-  // Gets user's location or uses Brasília as fallback (Obtém a localização do usuário ou usa Brasília como fallback)
-  useEffect(() => {
-    if ("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          setCoordinates({
-            lat: position.coords.latitude,
-            lon: position.coords.longitude,
-          });
-        },
-        () => setCoordinates(defaultLocation) // If denied, use Brasília (Se negado, usa Brasília)
-      );
-    } else {
-      setCoordinates(defaultLocation); // Use default location (Usa localização padrão)
+  function getUserLocation() {
+    if (!("geolocation" in navigator)) {
+      setCoordinates(defaultLocation);
+      return;
     }
-  }, []);
+
+    setWaiting(true);
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        setCoordinates({
+          lat: position.coords.latitude,
+          lon: position.coords.longitude,
+        });
+        setWaiting(false);
+      },
+      () => {
+        setCoordinates(defaultLocation);
+        setWaiting(false);
+      },
+    );
+  }
 
   // Gets the city name based on coordinates (Obtém o nome da cidade com base nas coordenadas)
   useEffect(() => {
@@ -53,7 +58,7 @@ export default function WeatherDataFetcher() {
     const fetchCityName = async () => {
       try {
         const response = await axios.get(
-          `https://api.openweathermap.org/geo/1.0/reverse?lat=${coordinates.lat}&lon=${coordinates.lon}&limit=1&appid=${apiKey}`
+          `https://api.openweathermap.org/geo/1.0/reverse?lat=${coordinates.lat}&lon=${coordinates.lon}&limit=1&appid=${apiKey}`,
         );
 
         if (response.data.length > 0) {
@@ -79,7 +84,7 @@ export default function WeatherDataFetcher() {
 
       try {
         const response = await axios.get(
-          `https://api.openweathermap.org/data/2.5/forecast?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${apiKey}&units=metric`
+          `https://api.openweathermap.org/data/2.5/forecast?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${apiKey}&units=metric`,
         );
         setData(response.data); // Store the weather data (Armazena os dados meteorológicos)
       } catch (err) {
@@ -95,28 +100,60 @@ export default function WeatherDataFetcher() {
 
   return (
     <div>
-      <Search onCoordinatesFound={handleCoordinates} /> {/* Search for a location (Busca por uma localização) */}
-      <h1
-        style={{
-          fontSize: "1.1em",
-          margin: " 15px auto 0",
-          padding: "5px",
-          textAlign: "center",
-          backgroundColor: "var(--color2)",
-          color: "var(--color1)",
-          maxWidth: "660px",
-          boxShadow: "#0000006b 1px 1px 2px 0px",
-        }}>
-        {location.city} {location.state ? `(${location.state})` : ""},{" "}
-        {location.country}
-      </h1>
-
-      <Weather
-        data={data}
-        errorMessage={errorMessage}
-        isLoading={isLoading}
-        waiting={waiting}
-      /> {/* Displays weather data (Exibe os dados meteorológicos) */}
+      <Search onCoordinatesFound={handleCoordinates} />
+      {/* Search for a location (Busca por uma localização) */}
+      {data && (
+        <>
+          <h1
+            style={{
+              fontSize: "1.1em",
+              margin: " 15px auto 0",
+              padding: "5px",
+              textAlign: "center",
+              backgroundColor: "var(--color2)",
+              color: "var(--color1)",
+              maxWidth: "660px",
+              boxShadow: "#0000006b 1px 1px 2px 0px",
+            }}>
+            {location.city} {location.state ? `(${location.state})` : ""},{" "}
+            {location.country}
+          </h1>
+          <Weather
+            data={data}
+            errorMessage={errorMessage}
+            isLoading={isLoading}
+            waiting={waiting}
+          />
+        </>
+      )}
+      {!data && (
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: "8px",
+            marginTop:"100px"
+          }}>
+          <p style={{ textAlign: "center" }}>
+            Search for a location
+          </p>
+          <button
+            onClick={getUserLocation}
+            style={{
+              padding: "6px",
+              backgroundColor: "var(--color2)",
+              color: "white",
+              border: "1px solid",
+              borderRadius: "5px",
+              cursor: "pointer",
+            }}>
+            Use my location
+          </button>
+        </div>
+      )}
+      {/* Displays weather data (Exibe os dados meteorológicos) */}
     </div>
   );
 }

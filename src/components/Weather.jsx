@@ -27,6 +27,9 @@ export default function Weather({ data, errorMessage, isLoading, waiting }) {
   const [cloudness, setCloudness] = useState(data.list[0].clouds.all); // Stores cloud coverage data (Armazena os dados de cobertura de nuvens)
   const [visibility, setVisibility] = useState(data.list[0].visibility); // Stores visibility data (Armazena os dados de visibilidade)
 
+
+
+
   // Updates weather details (Atualiza os detalhes do tempo)
   const updateWeatherDetails = (
     temp,
