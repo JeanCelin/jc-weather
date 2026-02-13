@@ -14,8 +14,6 @@
   margin: 20px 5px;
 
 
-  position: relative;
-  height: 100%;
 }
 .weather__infoContainer {
   display: flex;

@@ -1,6 +1,12 @@
-.dailyForecast__container {
+.main_container {
   display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 16px;
+}
+.dailyForecast__container {
+  display: flex;
   flex-direction: column;
+  gap: 8px;
   padding: 5px;
   border: 1px solid var(--color2);
   border-radius: 10px;
@@ -13,14 +19,14 @@
   position: relative;
 }
 .dailyForecast__content {
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  flex-wrap: wrap;
-
-  text-align: center;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
 
   font-size: 0.9em;
+}
+.dailyForecast__icon {
+  display: flex;
+  align-items: center;
 }
 .dailyForecast__day {
   position: absolute;
@@ -57,6 +63,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+
 }
 .dailyForecast__descriptionContainer div {
   display: flex;
@@ -64,8 +71,11 @@
 
 .dailyForecast__tempContainer {
   display: flex;
-  flex-direction: row-reverse;
+  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
+  gap: 8px;
+
 }
 .dailyForecast__temp {
   flex-direction: column;

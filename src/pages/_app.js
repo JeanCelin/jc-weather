@@ -1,5 +1,5 @@
 import "@/styles/globals.css";
-import { Roboto } from "next/font/google";
+import { Roboto, Inter } from "next/font/google";
 
 const roboto = Roboto({
   weight: "400",
@@ -7,9 +7,15 @@ const roboto = Roboto({
   display: "swap",
 });
 
+const inter = Inter({
+  weight: "500",
+  subsets: ["latin"],
+  display: "swap",
+});
+
 export default function App({ Component, pageProps }) {
   return (
-    <div className={roboto.className}>
+    <div className={inter.className}>
       <Component {...pageProps} />
     </div>
   );
