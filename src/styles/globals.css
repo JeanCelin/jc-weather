@@ -3,11 +3,16 @@
   --color1: white;
   --color2: #0095eb;
   --color3: #00598d;
+  --color4: rgba(239, 239, 241, 0.6);
+  --color5: #666666;
+  --color6: #b8b8b8;
 }
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--color5);
 }
