@@ -12,6 +12,8 @@ export default function Weather({ data }) {
 
   const [forecastDaysCount, setForecastDaysCount] = useState(5); // Store the number of forecast days. Change here to change the amount of forecast days that are displayed when starting the site. (Armazene o número de dias previstos. Altere aqui para alterar a quantidade de dias previstos que são exibidos ao iniciar o site)
 
+  console.log(data)
+
   const [city, setCity] = useState(data.city); // Stores city data (Armazena os dados da cidade)
   const [temp, setTemp] = useState(data.list[0].main); // Stores temperature data (Armazena os dados da temperatura)
   const [wind, setWind] = useState(data.list[0].wind); // Stores wind data (Armazena os dados do vento)

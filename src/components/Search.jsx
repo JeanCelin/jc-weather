@@ -4,7 +4,7 @@ import Image from "next/image";
 import styles from "./Search.module.css";
 import useDebounce from "./hooks/useDebounce";
 
-export default function Search({ handleCityInfo }) {
+export default function Search({ handleCityInfo, handleGetUserCoordinates }) {
   //armazena conteúdo digitado no input
   const [inputContent, setInputContent] = useState("");
   const [cityInfo, setCityInfo] = useState([]);
@@ -29,13 +29,30 @@ export default function Search({ handleCityInfo }) {
 
     async function load() {
       const res = await axios.get(`/api/city?query=${debouncedValue}`);
-     
 
-      setCityInfo(res.data);
+      setCityInfo(res.data)
     }
 
     load();
   }, [debouncedValue]);
+
+  const handleUserCoordinates = () => {
+    if (!navigator.geolocation) {
+      alert("Geolocation is not supported by your browser.");
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition((position) => {
+      const { latitude, longitude } = position.coords;
+      console.log("User coordinates:", latitude, longitude);
+      handleGetUserCoordinates(latitude, longitude);
+    });
+  };
+    
+    
+
+
+
 
   return (
     <section className={styles.search__container}>
@@ -53,20 +70,30 @@ export default function Search({ handleCityInfo }) {
           <Image src={"/clear.png"} width={16} height={16} alt="clear icon" />
         </div>
         <ul className={styles.search__list}>
-          {cityInfo.length > 0 && cityInfo.map((data, index) => {
-            return (
-              <li
-                key={index}
-                className={styles.search__listItem}
-                onClick={handleSelectCity}>
-                <p>
-                  {data.name} {data.state}, {data.country}
-                </p>
-              </li>
-            );
-          })}
+          {cityInfo.length > 0 &&
+            cityInfo.map((data, index) => {
+              return (
+                <li
+                  key={index}
+                  className={styles.search__listItem}
+                  onClick={handleSelectCity}>
+                  <p>
+                    {data.name} {data.state}, {data.country}
+                  </p>
+                </li>
+              );
+            })}
         </ul>
+      </div>
+      <div>
+        <button
+          className={styles.search__locationButton}
+          onClick={handleUserCoordinates}
+         >
+          Use my location
+        </button>
       </div>
     </section>
   );
+
 }
