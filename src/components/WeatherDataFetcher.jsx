@@ -1,29 +1,70 @@
-import axios from "axios";
 import { useEffect, useState, useTransition } from "react";
 import { useGetWeather } from "./hooks/useGetWeather";
+import Forecast from "./Forecast";
+import styles from "./WeatherDataFetcher.module.css";
+import { Sun } from "lucide-react";
 
-import Weather from "@/components/Weather";
 import Search from "./Search";
+import Footer from "./Footer";
+import Dashboard from "./Dashboard";
+
+/**
+ * -------------------------------------------------------------
+ * WeatherDataFetcher Component
+ * -------------------------------------------------------------
+ * Responsável por:
+ * - Buscar dados meteorológicos via API
+ * - Controlar estado global da aplicação
+ * - Atualizar localização selecionada
+ * - Gerenciar transições de UI com useTransition
+ * - Orquestrar Dashboard + Forecast
+ *
+ * Fluxo:
+ * 1. Carrega clima padrão (Brasília)
+ * 2. Permite busca por cidade
+ * 3. Permite busca por geolocalização
+ * 4. Atualiza os componentes filhos com novos dados
+ */
 
 export default function WeatherDataFetcher() {
-  const [data, setData] = useState(null); // Stores weather data (Armazena os dados meteorológicos)
-  const [errorMessage, setErrorMessage] = useState(null); // Stores error message (Armazena a mensagem de erro)
-  const [isLoading, setIsLoading] = useState(true); // Stores loading state (Armazena o estado de carregamento)
+  /**
+   * -------------------------------------------------------------
+   * Estados principais da aplicação
+   * -------------------------------------------------------------
+   */
 
-  const [waiting, setWaiting] = useState(true); // Stores the waiting state for geolocation (Armazena o estado de espera para a geolocalização)
-  const [location, setLocation] = useState({}); // Stores location data (Armazena os dados de localização)
-  const { getWeather } = useGetWeather(); // Custom hook to fetch weather data (Hook personalizado para buscar dados meteorológicos)
+  // Dados completos retornados pela API
+  const [data, setData] = useState(null);
 
-  const [isPending, startTransition] = useTransition(); // Transition state for UI updates (Estado de transição para atualizações de UI)
-  // Default location (Localização padrão: Brasília)
+  // Mensagem de erro (caso a requisição falhe)
+  const [errorMessage, setErrorMessage] = useState(null);
 
-  // Updates coordinates when the user selects a location (Atualiza as coordenadas quando o usuário seleciona um local)
+  // Informações da cidade exibida
+  const [location, setLocation] = useState({});
 
+  /**
+   * Hook customizado responsável por buscar dados da API
+   */
+  const { getWeather } = useGetWeather();
+
+  /**
+   * useTransition
+   * Permite atualizar dados sem travar a interface
+   */
+  const [isPending, startTransition] = useTransition();
+
+  /**
+   * -------------------------------------------------------------
+   * Carrega clima padrão (Brasília) ao montar componente
+   * -------------------------------------------------------------
+   */
   useEffect(() => {
     async function fetchDefaultWeather() {
       try {
         const response = await getWeather(-15.793889, -47.882778);
+
         setData(response);
+
         setLocation({
           name: "Brasília",
           state: "DF",
@@ -37,85 +78,100 @@ export default function WeatherDataFetcher() {
     fetchDefaultWeather();
   }, []);
 
+  /**
+   * -------------------------------------------------------------
+   * Atualiza dados quando o usuário seleciona uma cidade
+   * -------------------------------------------------------------
+   */
   const handleCityInfo = async (city) => {
-    console.log(city);
+    const { name, state, country, lat, lon } = city?.[0];
 
-    const { name, state, country, lat, lon } = city[0];
-
-    setLocation({ name: name, state: state, country: country });
+    setLocation({ name, state, country });
 
     if (!lat || !lon) return;
 
+    const response = await getWeather(lat, lon);
     startTransition(async () => {
-      const response = await getWeather(lat, lon);
       setData(response);
-      console.log(response);
     });
   };
+
+  /**
+   * -------------------------------------------------------------
+   * Atualiza dados usando geolocalização do usuário
+   * -------------------------------------------------------------
+   */
   const handleGetUserCoordinates = async (latitude, longitude) => {
-    try {
-      const response = await getWeather(latitude, longitude);
-      console.log(response);
-      setData(response);
-      setLocation({
-        name: response.city.name,
-        state: response.city.state,
-        country: response.city.country,
-      });
-    } catch (error) {
-      setErrorMessage("Failed to fetch weather for your location.");
-    }
+    if (!latitude || !longitude) return;
+
+    startTransition(async () => {
+      try {
+        const response = await getWeather(latitude, longitude);
+
+        setData(response);
+
+        setLocation({
+          name: response.city.name,
+          state: response.city.state,
+          country: response.city.country,
+        });
+      } catch (error) {
+        setErrorMessage("Failed to fetch weather for your location.");
+      }
+    });
   };
 
+  /**
+   * -------------------------------------------------------------
+   * Renderização principal
+   * -------------------------------------------------------------
+   */
   return (
-    <div>
+    <div className={styles.main}>
       <Search
         handleCityInfo={handleCityInfo}
         handleGetUserCoordinates={handleGetUserCoordinates}
+        isPending={isPending}
       />
-      {/* Search for a location (Busca por uma localização) */}
-      {isPending ? (
-        <p style={{ textAlign: "center" }}>Loading...</p>
-      ) : (
-        data && (
-          <>
-            <p
-              style={{
-                fontSize: "1.1em",
-                margin: " 15px auto 0",
-                padding: "5px",
-                textAlign: "center",
-                backgroundColor: "var(--color2)",
-                color: "var(--color1)",
-                maxWidth: "660px",
-                boxShadow: "#0000006b 1px 1px 2px 0px",
-              }}>
-              {location.name} {location.state ? `(${location.state})` : ""}
-              {`, ${location.country}`}
-            </p>
-            <Weather
-              data={data}
-              errorMessage={errorMessage}
-              isLoading={isLoading}
-              waiting={waiting}
-            />
-          </>
-        )
-      )}
-      {!data && (
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            gap: "8px",
-            marginTop: "100px",
-          }}>
-          <p style={{ textAlign: "center" }}>Search for a location</p>
-        </div>
-      )}
-      {/* Displays weather data (Exibe os dados meteorológicos) */}
+
+      <section className={styles.main__wraper}>
+        <section className={styles.weatherDataFetcher__head}>
+          <div className={styles.weatherDataFetcher__icon}>
+            <Sun size={18} color="var(--color3)" />
+          </div>
+
+          <div>
+            <h1 className={styles.weatherDataFetcher__title}>
+              {location.name ? location.name : "City name"}
+              {location.state && ` (${location.state})`} -{" "}
+              {location.country ? location.country : "Country"}
+            </h1>
+
+            <p>Previsão dos próximos dias</p>
+          </div>
+        </section>
+
+        <section className={styles.main__content}>
+          <div className={styles.main__dashboard}>
+            <Dashboard data={data} location={location} />
+          </div>
+
+          <div className={styles.main__forecast}>
+            {isPending ? (
+              <div className={styles.loadingOverlay}>
+                <div className={styles.loadingBox}>
+                  <div className={styles.spinner}></div>
+                  <p>Buscando previsão...</p>
+                </div>
+              </div>
+            ) : (
+              data && <Forecast data={data} location={location} />
+            )}
+          </div>
+        </section>
+      </section>
+
+      <Footer />
     </div>
   );
 }

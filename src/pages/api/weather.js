@@ -3,14 +3,14 @@ import axios from "axios";
 export default async function handler(req, res) {
   const defaultLocation = { lat: -15.7797, lon: -47.9297 };
 
-  const { lat, lon } = req.query;
+  const { lat, lon, lang } = req.query;
   console.log(`API weather query: ${req.query}`);
 
   const key = process.env.OPENWEATHER_KEY;
   console.log(`API weather KEY: ${key}`);
   try {
     const response = await axios.get(
-      `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${key}&units=metric`,
+      `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${key}&units=metric&lang=${lang}`,
     );
 
     console.log("response data:", response.data);

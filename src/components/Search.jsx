@@ -3,9 +3,13 @@ import axios from "axios";
 import Image from "next/image";
 import styles from "./Search.module.css";
 import useDebounce from "./hooks/useDebounce";
-import { LucideSearch, MapPin } from "lucide-react";
+import { CloudSun, LucideSearch, MapPin, X } from "lucide-react";
 
-export default function Search({ handleCityInfo, handleGetUserCoordinates }) {
+export default function Search({
+  handleCityInfo,
+  handleGetUserCoordinates,
+  isPending,
+}) {
   //armazena conteúdo digitado no input
   const [inputContent, setInputContent] = useState("");
   const [cityInfo, setCityInfo] = useState([]);
@@ -56,53 +60,85 @@ export default function Search({ handleCityInfo, handleGetUserCoordinates }) {
 
   return (
     <section className={styles.search__container}>
-      <div>
+      <div className={styles.search__logoContainer}>
+        <div className={styles.search__logo}>
+          <CloudSun size={24} color="var(--color3)" />
+        </div>
         <p className={styles.search__title}>JC Weather</p>
-        {cityName && (
-          <p>
-            {cityName}, {countryName}
-          </p>
-        )}
-        {console.log(cityInfo)}
       </div>
       <div className={styles.search__ctas}>
         <div className={styles.search__content}>
           <div className={styles.search__inputWrapper}>
-            <LucideSearch size={16} color="var(--color5)" className={styles.search__icon} />
+            <LucideSearch
+              size={16}
+              color="var(--color5)"
+              className={styles.search__icon}
+            />
+
+            <label htmlFor="city-search" className={styles.visuallyHidden}>
+              {isPending ? "Buscando Previsão..." : "Digite a Cidade..."}
+            </label>
+
             <input
+              id="city-search"
               type="text"
-              placeholder="Enter city..."
+              disabled={isPending}
+              placeholder={
+                isPending ? "Buscando Previsão..." : "Digite a Cidade..."
+              }
               value={inputContent}
-              onChange={handleChange} // Calls handleChange when input changes (Chama handleChange quando o input muda)
+              onChange={handleChange}
               className={styles.search__bar}
               autoComplete="off"
             />
           </div>
-          <div className={styles.search__clear} onClick={handleClearSearch}>
-            <Image src={"/clear.png"} width={16} height={16} alt="clear icon" />
-          </div>
+          <button
+            type="button"
+            className={styles.search__clear}
+            onClick={handleClearSearch}
+            aria-label="Clear search">
+            <X size={16} aria-hidden="true" />
+          </button>
           <ul className={styles.search__list}>
             {cityInfo.length > 0 &&
               cityInfo.map((data, index) => {
                 return (
-                  <li
-                    key={index}
-                    className={styles.search__listItem}
-                    onClick={handleSelectCity}>
-                    <p>
-                      {data.name} {data.state}, {data.country}
-                    </p>
+                  <li key={index} className={styles.search__listItem}>
+                    <button
+                      type="button"
+                      onClick={() => handleSelectCity(data)}
+                      className={styles.search__listButton}>
+                      {data.name} {data.state ? `(${data.state})` : ""} -{" "}
+                      {data.country}
+                    </button>
                   </li>
                 );
               })}
           </ul>
         </div>
-
         <button
-          className={styles.search__locationButton}
-          onClick={handleUserCoordinates}>
-          <MapPin size={16} />
-          Use my location
+          type="button"
+          className={
+            isPending
+              ? styles.search__locationButtonDisabled
+              : styles.search__locationButton
+          }
+          disabled={isPending}
+          onClick={handleUserCoordinates}
+          aria-label="Buscar clima do meu local atual">
+          <MapPin
+            size={16}
+            color={isPending ? "var(--color0)" : "var(--color1)"}
+            aria-hidden="true"
+          />
+          <span
+            className={
+              isPending
+                ? styles.search__locationTextDisabled
+                : styles.search__locationText
+            }>
+            Meu Local
+          </span>
         </button>
       </div>
     </section>

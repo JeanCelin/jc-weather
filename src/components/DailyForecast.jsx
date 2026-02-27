@@ -1,128 +1,215 @@
-import { useEffect, useState } from "react";
-import { getWeatherIconById } from "@/utils/weatherIcons";
+/**
+ * -------------------------------------------------------------
+ * DailyForecast Component
+ * -------------------------------------------------------------
+ * Responsável por renderizar a previsão diária do clima.
+ * Exibe:
+ *  - Data (mês + dia)
+ *  - Descrição do clima
+ *  - Probabilidade de chuva
+ *  - Temperatura e sensação térmica
+ *  - Toggle para exibir previsão horária
+ *
+ * @param {Array} groupedWeatherData
+ * Estrutura esperada:
+ * [
+ *   {
+ *     day: number | string,
+ *     elements: [
+ *       {
+ *         dt_txt: string,
+ *         weather: [{ id: number, description: string }],
+ *         main: { temp: number, feels_like: number },
+ *         pop: number
+ *       }
+ *     ]
+ *   }
+ * ]
+ *
+ * @param {Function} updateWeatherDetails
+ * Função utilizada pelo componente filho (HourlyForecast)
+ * para atualizar os detalhes do clima.
+ */
 
+import { useState } from "react";
+import { getWeatherIconById } from "@/utils/weatherIcons";
 
 import HourlyForecast from "./HourlyForecast";
 import styles from "./DailyForecast.module.css";
-import TempWarning from "./TempWarning";
+
 import {
-  ArrowDown,
-  ArrowUp,
   ChevronDown,
-  ChevronUp,
   Droplet,
   Flame,
-  Cloud,
   Thermometer,
+  Calendar,
 } from "lucide-react";
 
 export default function DailyForecast({
   groupedWeatherData,
   updateWeatherDetails,
+  timezoneOffset
 }) {
-  const [openDays, setOpenDays] = useState({}); // New state to track which days are open (Novo estado para rastrear quais dias estão abertos)
+  /**
+   * openDays
+   * Armazena quais dias estão expandidos.
+   * Estrutura:
+   * {
+   *   [day]: boolean
+   * }
+   */
+  const [openDays, setOpenDays] = useState({});
 
-  // Function that toggles the state for a specific day (Função que altera o estado para o dia específico)
+  /**
+   * handleDropArrow
+   * Alterna o estado expandido/recolhido de um dia específico.
+   *
+   * @param {string|number} day
+   */
   const handleDropArrow = (day) => {
     setOpenDays((prev) => ({
-      ...prev, // Keeps the previous state (Mantém o estado anterior)
-      [day]: !prev[day], // Toggles the value only for the clicked day (Inverte o valor apenas para o dia clicado)
+      ...prev,
+      [day]: !prev[day],
     }));
   };
 
+  /**
+   * getMonthAbbreviation
+   * Converte uma string de data para abreviação do mês (pt-BR).
+   *
+   * @param {string} dateString
+   * @returns {string} Ex: "JAN", "FEV", etc.
+   */
+  function getMonthAbbreviation(dateString) {
+    const date = new Date(dateString.replace(" ", "T"));
+
+    return new Intl.DateTimeFormat("pt-BR", {
+      month: "short",
+    })
+      .format(date)
+      .replace(/\./g, "")
+      .toUpperCase();
+  }
+
   return (
-    <div className={styles.main_container}>
-      {groupedWeatherData.map((element, index) => {
-        const dataDaily = element.elements[0]; // Extract daily weather data (Extrai os dados do tempo diário)
+    <div className={styles.main__container}>
+      {/* Título da seção */}
+      <div className={styles.dailyForecast__title}>
+        <Calendar size={16} color="var(--color3)" />
+        <h2>PREVISÃO DIÁRIA</h2>
+      </div>
 
-        const weather = dataDaily.weather[0]; // Extract weather information (Extrai as informações do tempo)
-        const temp = dataDaily.main; // Extract temperature data (Extrai os dados de temperatura)
-        const day = element.day; // Extract the day of the forecast (Extrai o dia da previsão)
+      {/* Lista de dias agrupados */}
+      {groupedWeatherData.map((element) => {
+        console.log(element)
+        /**
+         * 
+         * Extração segura dos dados do dia
+         */
+        const dataDaily = element?.elements[0];
+        const weather = dataDaily?.weather[0];
+        const temp = dataDaily?.main;
+        const day = element.day;
 
+        /**
+         * Ícone dinâmico baseado no código do clima
+         */
         const Icon = getWeatherIconById(weather.id);
 
+        /**
+         * Abreviação do mês
+         */
+        const month = getMonthAbbreviation(element.elements[0].dt_txt);
+
         return (
-          <div key={index} className={styles.dailyForecast__container}>
-            <p
-              className={`${styles.dailyForecast__day} ${
-                openDays[day]
-                  ? styles.dailyForecast__day_shortPosition
-                  : styles.dailyForecast__day_longPosition
-              }`}>
-              {day}
-            </p>
-            <div
-              className={styles.dailyForecast__hidden}
-              onClick={() => handleDropArrow(day)} // Passes the day to the function (Passa o dia para a função)
-            >
-              {openDays[day] ? ( // Checks if the day is "open" in state (Verifica se o dia está "aberto" no estado)
-                <ChevronUp size={24} />
-              ) : (
-                <ChevronDown size={24} />
-              )}
-            </div>
-            <div className={styles.dailyForecast__content}>
-              <section className={styles.dailyForecast__descriptionContainer}>
-                <Icon size={32} />
-                {/* <Image
-                  src={iconSrc}
-                  width={64}
-                  height={64}
-                  alt={weather.description}
-                /> */}
-                <p>{weather.description}</p>{" "}
-                {/* Display weather description (Exibe a descrição do clima) */}
-                <div className={styles.dailyForecast__icon}>
-                  <Droplet size={24} />
-                  <p>{parseInt(dataDaily.pop * 100)}%</p>{" "}
-                  {/* Display precipitation probability (Exibe a probabilidade de precipitação) */}
-                </div>
+          <section key={element.day} className={styles.dailyForecast__main}>
+            <section className={styles.dailyForecast__container}>
+              {/* Data (mês + dia) */}
+              <section className={styles.dailyForecast__date}>
+                <span className={styles.dailyForecast__month}>{month}</span>
+                <span className={styles.dailyForecast__day}>{day}</span>
               </section>
 
-              <section className={styles.dailyForecast__tempContainer}>
-                <div className={styles.dailyForecast__temp}>
-                  <div className={styles.dailyForecast__icon}>
-                    <Thermometer size={24} />
-                    <p>Temp: {temp.temp}°C</p>{" "}
-                  </div>
-                  <div className={styles.dailyForecast__icon}>
-                    {/* Display temperature (Exibe a temperatura) */}
-                    <Flame size={24} />
-                    <p>Feels like: {temp.feels_like}°C</p>{" "}
-                  </div>
-                  {/* Display "feels like" temperature (Exibe a temperatura percebida) */}
-                </div>
-                <div className={styles.dailyForecast__tempVariationContainer}>
-                  <TempWarning top={"50%"} right={"-150px"} />{" "}
-                  {/* Display temperature warning (Exibe o aviso de temperatura) */}
-                  <div>
-                    <div className={styles.dailyForecast__tempVariation}>
-                      <ArrowUp size={24} color="#da3535" />
-                      <p>{temp.temp_max}°C</p>{" "}
-                      {/* Display maximum temperature (Exibe a temperatura máxima) */}
-                    </div>
-                    <div className={styles.dailyForecast__tempVariation}>
-                      <ArrowDown size={24} color="#184c6a" />
-                      <p>{temp.temp_min}°C</p>{" "}
-                      {/* Display minimum temperature (Exibe a temperatura mínima) */}
+              <section className={styles.dailyForecast__content}>
+                {/* Seção de clima e chuva */}
+                <section className={styles.dailyForecast__rain}>
+                  <Icon size={32} color="var(--color3)" />
+
+                  <div className={styles.dailyForecast__rainText}>
+                    <p>{weather.description}</p>
+
+                    {/* Probabilidade de precipitação */}
+                    <div className={styles.dailyForecast__drop}>
+                      <Droplet size={16} />
+                      <p>{parseInt(dataDaily.pop * 100)}%</p>
                     </div>
                   </div>
-                </div>
+                </section>
+
+                {/* Seção de temperatura */}
+                <section className={styles.dailyForecast__temp}>
+                  {/* Temperatura atual */}
+                  <div className={styles.dailyForecast__tempContent}>
+                    <p>Temperatura</p>
+                    <div className={styles.dailyForecast__iconAdjust}>
+                      <Thermometer size={16} color="red" />
+                      <p>{temp.temp}°C</p>
+                    </div>
+                  </div>
+
+                  {/* Sensação térmica */}
+                  <div className={styles.dailyForecast__tempContent}>
+                    <p>Sensação</p>
+                    <div className={styles.dailyForecast__iconAdjust}>
+                      <Flame size={16} color="orange" />
+                      <p>{temp.feels_like}°C</p>
+                    </div>
+                  </div>
+
+                  {/* Botão de expansão */}
+                  <div className={styles.dailyForecast__expand}>
+                    <button
+                      type="button"
+                      className={styles.dailyForecast__expandBtn}
+                      onClick={() => handleDropArrow(day)}
+                      /**
+                       * Acessibilidade:
+                       * - aria-expanded: indica se está aberto
+                       * - aria-controls: conecta botão à área expandida
+                       * - aria-label: descreve a ação
+                       */
+                      aria-expanded={openDays[day] ?? false}
+                      aria-controls={`forecast-${day}`}
+                      aria-label={
+                        openDays[day]
+                          ? `Recolher previsão do dia ${day}`
+                          : `Expandir previsão do dia ${day}`
+                      }>
+                      <ChevronDown
+                        size={24}
+                        color="var(--color3)"
+                        aria-hidden="true"
+                      />
+                    </button>
+                  </div>
+                </section>
               </section>
-            </div>
+            </section>
+
+            {/* Renderização condicional da previsão horária */}
             {openDays[day] && (
               <div
-                className={`${styles.hourlyForecast__container} ${
-                  openDays[day] ? "show" : ""
-                }`}>
+                id={`forecast-${day}`}
+                className={styles.hourlyForecast__container}>
                 <HourlyForecast
                   groupedWeatherData={groupedWeatherData}
                   updateWeatherDetails={updateWeatherDetails}
                   day={day}
+                  timezone={timezoneOffset}
                 />
               </div>
             )}
-          </div>
+          </section>
         );
       })}
     </div>

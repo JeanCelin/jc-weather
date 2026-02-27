@@ -1,39 +1,78 @@
 .footer {
-  background-color: #222;
-  color: var(--color1);
-  text-align: center;
-  padding: 20px;
-  font-size: 14px;
+  background-color: #111315; /* preto suavizado */
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+
+  margin-top: 48px;
+  padding: 48px 16px;
+
+  color: rgba(255, 255, 255, 0.85);
 }
 
-.footer__content {
+.footer__wrapper {
+  max-width: 1024px;
+  margin: 0 auto;
+
   display: flex;
   flex-direction: column;
+  gap: 24px;
   align-items: center;
-  gap: 10px;
+  text-align: center;
 }
 
+/* Links principais */
 .footer__links {
   display: flex;
-  gap: 15px;
+  gap: 24px;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .footer__links a {
-  color: var(--color2);
+  color: rgba(255, 255, 255, 0.75);
   text-decoration: none;
-  transition: 0.3s;
+  transition: all 0.2s ease;
 }
 
 .footer__links a:hover {
-  text-decoration: underline;
+  color: #0095eb; /* azul da sua identidade */
 }
+
+/* Links externos */
+.footer__externalLinks {
+  max-width: 650px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.7);
+}
+
 .footer__externalLinks a {
-  color: #EA6E4B;
+  color: #fcbf1e; /* amarelo oficial OpenWeather */
   text-decoration: none;
+  font-weight: 600;
 }
 
+.footer__externalLinks a:hover {
+  text-decoration: underline;
+  filter: brightness(1.1);
+}
 
-.footer__text {
-  margin-top: 10px;
-  opacity: 0.8;
+/* Texto secundário */
+.footer__note {
+  max-width: 600px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Autor */
+.footer__author {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.6);
+  margin-top: 8px;
+}
+
+/* Responsividade */
+@media (max-width: 600px) {
+  .footer__links {
+    flex-direction: column;
+    gap: 12px;
+  }
 }

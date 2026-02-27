@@ -1,26 +1,34 @@
-.hourlyForecast__container {
-  border-top: 1px solid var(--color2);
-  display: flex;
-  justify-content: flex-start;
-  text-align: center;
-  gap: 20px;
-
-  max-width: 98%;
-  overflow-x: scroll;
-
-  font-size: 0.8em;
-  padding: 5px 10px;
-}
-
-.hourlyForecast__content {
+.hourlyForecast {
+  border-top: 1px solid var(--color6);
+  padding: 16px;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
-
-  flex: 0 0 62px;
-  cursor: pointer;
+  gap: 8px;
 }
+.hourlyForecast__container {
+  display: flex;
+  gap: 12px;
+  overflow-x: scroll;
+  padding-bottom: 8px;
+}
+.hourlyForecast__content {
+ 
+  background-color: var(--color4);
+  padding: 8px;
+  border-radius: 8px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 4px;
+  min-width: 92px;
+}
+
 .hourlyForecast__preciptation {
   display: flex;
   align-items: center;
+  gap: 4px;
 }

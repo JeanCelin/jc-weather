@@ -1,30 +1,59 @@
-import { useState } from "react"; 
+import { useState } from "react";
 import axios from "axios";
 
+/**
+ * Hook responsável por buscar sugestões de cidades
+ * utilizando a API de Geocoding da OpenWeather.
+ *
+ * Retorna:
+ * - suggestions: lista de cidades encontradas
+ * - fetchCities: função para buscar cidades
+ * - isLoading: estado de carregamento
+ * - errorMessage: mensagem de erro (caso exista)
+ */
 export default function useCitySearch() {
-  const [suggestions, setSuggestions] = useState([]); 
-  const [errorMessage, setErrorMessage] = useState(null); 
+  // Lista de sugestões retornadas pela API
+  const [suggestions, setSuggestions] = useState([]);
+
+  // Armazena mensagem de erro, caso a requisição falhe
+  const [errorMessage, setErrorMessage] = useState(null);
+
+  // Controla o estado de carregamento da requisição
   const [isLoading, setIsLoading] = useState(false);
 
-  const apiKey = process.env.NEXT_PUBLIC_API_KEY; // API key for openweathermap. (Chave API para openweathermap)
+  // Chave pública da API (definida nas variáveis de ambiente)
+  const apiKey = process.env.NEXT_PUBLIC_API_KEY;
 
-  // Function to fetch cities from the API (Função para buscar cidades na API)
+  /**
+   * Realiza a busca de cidades na API da OpenWeather
+   * @param {string} query - Texto digitado pelo usuário
+   */
   const fetchCities = async (query) => {
-    setIsLoading(true); // Set loading state to true (Define o estado de carregamento como verdadeiro).
+    if (!query) return;
+
+    setIsLoading(true);
+    setErrorMessage(null);
 
     try {
-      const response = await axios.get( // Make the API request (Fazer a solicitação à API)
+      const response = await axios.get(
         `https://api.openweathermap.org/geo/1.0/direct?q=${query}&limit=5&appid=${apiKey}`
       );
-      console.log(response)
-      setSuggestions(response.data.length > 0 ? response.data : []); // Set suggestions based on API response (Definir sugestões com base na resposta da API).
-    } catch (err) {
-      setErrorMessage("Erro ao buscar sugestões."); // Set error message in case of failure (Definir mensagem de erro em caso de falha).
-  
+
+      // Se houver resultados, armazena no estado
+      // Caso contrário, mantém como array vazio
+      setSuggestions(response.data?.length ? response.data : []);
+    } catch (error) {
+      setErrorMessage("Erro ao buscar sugestões.");
+      setSuggestions([]);
     } finally {
-      setIsLoading(false); // Reset loading state to false (Resetar o estado de carregamento para falso).
+      setIsLoading(false);
     }
   };
 
-  return { suggestions, fetchCities, isLoading, errorMessage }; // Return the state and function (Retornar o estado e a função).
+  return {
+    suggestions,
+    fetchCities,
+    isLoading,
+    errorMessage,
+  };
 }

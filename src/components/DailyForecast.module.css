@@ -1,105 +1,177 @@
-.main_container {
-  display: grid;
-  grid-template-columns: repeat(1, 1fr);
-  gap: 16px;
-}
-.dailyForecast__container {
+.main__container {
   display: flex;
   flex-direction: column;
+  margin: 16px;
+
+  gap: 16px;
+
+
+}
+
+.dailyForecast__title {
+  display: flex;
+  justify-content: flex-flex-start;
+  align-items: center;
   gap: 8px;
-  padding: 5px;
-  border: 1px solid var(--color2);
+  padding-left: 4px;
+}
+.dailyForecast__main {
+  background-color: var(--color1);
+  border: 1px solid var(--color6);
+  border-radius: 16px;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+
+    position: relative;
+}
+.dailyForecast__container {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+
+  padding: 16px;
   border-radius: 10px;
-  text-transform: uppercase;
-  max-width: 90vw;
-  font-size: 0.9em;
-
-  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.38);
-
-  position: relative;
+  gap: 8px;
 }
 .dailyForecast__content {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-
-  font-size: 0.9em;
-}
-.dailyForecast__icon {
   display: flex;
+  width: 100%;
+  justify-content: space-between;
   align-items: center;
+  padding: 0 4px;
 }
-.dailyForecast__day {
-  position: absolute;
+
+.dailyForecast__date {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 32px;
-  height: 32px;
 
-  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color3), var(--color2));
+  border-radius: 10px;
 
-  left: -16px;
-  color: white;
-  background-color: var(--color2);
-  box-shadow: 0px 2px 8px 0px #0000005c;
+  width: 48px;
+  height: 48px;
 }
 
-.dailyForecast__day_shortPosition {
-  top: 40%;
-}
-.dailyForecast__day_longPosition {
-  top: 34%;
+.dailyForecast__month {
+  color: var(--color1);
+  font-size: 10px;
 }
 
-.dailyForecast__hidden {
+.dailyForecast__day {
+  color: var(--color1);
+  font-size: 18px;
+  font-weight: bold;
+}
+.dailyForecast__rain {
+  display: flex;
+  text-transform: uppercase;
+  width: 100%;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 8px;
+  padding-left: 16px;
+}
+
+.dailyForecast__drop {
+  display: flex;
+  justify-content: flex-start;
+  padding-top: 4px;
+  align-items: center;
+}
+
+.dailyForecast__drop p {
+  font-size: 12px;
+}
+.dailyForecast__rainText {
+  display: flex;
+  flex-direction: column;
+}
+
+.dailyForecast__tempContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  text-wrap: nowrap;
+}
+.dailyForecast__temp {
+
+  display: flex;
+  gap: 18px;
+}
+.dailyForecast__iconAdjust {
+  display: flex;
+}
+.dailyForecast__iconAdjust p {
+  color: var(--color0);
+}
+
+.dailyForecast__expand {
   position: absolute;
   top: 0;
   right: 0;
+}
+.dailyForecast__expandBtn {
+  all: unset; /* remove estilo padrão do button */
 
+padding-right: 4px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+ 
+
+  border-radius: 50%;
   cursor: pointer;
-}
-.dailyForecast__descriptionContainer {
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 
-}
-.dailyForecast__descriptionContainer div {
-  display: flex;
+  transition: all 0.2s ease;
 }
 
-.dailyForecast__tempContainer {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  gap: 8px;
-
-}
-.dailyForecast__temp {
-  flex-direction: column;
-  display: flex;
-  gap: 5px;
+.dailyForecast__expandBtn svg {
+  color: var(--color1);
+  transition: transform 0.3s ease;
 }
 
-.dailyForecast__tempVariationContainer {
-  min-width: 118px;
-  display: flex;
-  flex-direction: row-reverse;
-  justify-content: center;
-  gap: 5px;
+/* Hover */
+.dailyForecast__expandBtn:hover {
+  transform: translateY(-2px);
+
 }
-.dailyForecast__tempVariation {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+
+/* Active */
+.dailyForecast__expandBtn:active {
+  transform: scale(0.95);
 }
-@media (min-width: 483px) {
+
+/* Rotação automática quando expandido */
+.dailyForecast__expandBtn[aria-expanded="true"] svg {
+  transform: rotate(180deg);
+}
+
+@media screen and (max-width: 500px) {
   .dailyForecast__container {
-    max-width: 434px;
+    grid-template-columns: 80px 1fr;
   }
   .dailyForecast__content {
-    flex-wrap: nowrap;
+    flex-direction: column;
+
+    gap: 16px;
+  }
+
+  .dailyForecast__date {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+@media screen and (max-width: 370px) {
+  .dailyForecast__container {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+  }
+  .dailyForecast__date {
+    padding: 8px 0;
   }
 }

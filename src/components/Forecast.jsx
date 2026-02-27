@@ -2,47 +2,100 @@ import { useEffect, useState } from "react";
 import styles from "./Forecast.module.css";
 import DailyForecast from "./DailyForecast";
 
-export default function Forecast({
-  data,
-  days = 1,
-  updateWeatherDetails,
-}) {
-  const weatherData = data.list; // Extracts the weather data list from the API response (Extrai a lista de dados do clima da resposta da API)
-  const [groupedWeatherData, setGroupedWeatherData] = useState([]); // State to store grouped weather data (Estado para armazenar os dados do clima agrupados)
+/**
+ * -------------------------------------------------------------
+ * Forecast Component
+ * -------------------------------------------------------------
+ * Responsável por:
+ * - Receber os dados brutos da API (forecast 5 dias / 3h)
+ * - Agrupar os dados por dia
+ * - Ordenar cronologicamente
+ * - Limitar a quantidade de dias exibidos
+ * - Repassar os dados agrupados para o componente DailyForecast
+ *
+ * @param {Object} data
+ * Resposta da API OpenWeather (forecast)
+ *
+ * @param {number} days
+ * Quantidade de dias que devem ser exibidos (default = 5)
+ *
+ * @param {Function} updateWeatherDetails
+ * Função usada para atualizar detalhes climáticos
+ */
+
+export default function Forecast({ data, days = 5, updateWeatherDetails }) {
+  /**
+   * Lista completa retornada pela API (intervalos de 3h)
+   */
+  const weatherData = data?.list ?? [];
+
+  /**
+   * Estado que armazenará os dados já agrupados por dia
+   */
+  const [groupedWeatherData, setGroupedWeatherData] = useState([]);
+
+  const timezoneOffset = data?.city?.timezone ?? 0; // offset em segundos
 
   useEffect(() => {
-    const groupedWeatherByDay = {}; // Create an object to group weather data by day (Cria um objeto para agrupar os dados do clima por dia)
+    /**
+     * Objeto auxiliar para agrupar previsões por dia
+     * Estrutura:
+     * {
+     *   "2026-02-27": [element1, element2, ...],
+     *   "2026-02-28": [element1, element2, ...]
+     * }
+     */
+    const groupedWeatherByDay = {};
+
+    if (!weatherData.length) return;
 
     weatherData.forEach((element) => {
-      const elementTimestamp = element.dt; // Extract timestamp (Extrai o timestamp)
-      const elementDate = new Date(elementTimestamp * 1000); // Convert timestamp to Date (Converte timestamp para Date)
-      const elementKey = elementDate.toISOString().split("T")[0]; // Uses YYYY-MM-DD as key (Usa YYYY-MM-DD como chave)
+  
+
+      // Ajusta o timestamp para o horário local da cidade
+      const localTimestamp = (element.dt + timezoneOffset) * 1000;
+
+      // Cria a data já ajustada
+      const localDate = new Date(localTimestamp);
+
+      // Gera chave no formato YYYY-MM-DD baseado no horário local
+      const elementKey = localDate.toISOString().split("T")[0];
 
       if (!groupedWeatherByDay[elementKey]) {
-        groupedWeatherByDay[elementKey] = []; // Initialize the array for the day (Inicializa o array para o dia)
+        groupedWeatherByDay[elementKey] = [];
       }
-      groupedWeatherByDay[elementKey].push(element); // Push the element to the corresponding day (Adiciona o elemento ao dia correspondente)
+
+      groupedWeatherByDay[elementKey].push(element);
     });
 
-    // Converts the object into an array and sorts by date (Converte o objeto em um array e ordena pela data)
+    /**
+     * Converte o objeto agrupado em array
+     * Ordena por data
+     * Limita a quantidade de dias exibidos
+     */
     const groupedWeatherArray = Object.entries(groupedWeatherByDay)
-    .map(([date, elements]) => ({
-      day: new Date(date + "T00:00:00Z").getUTCDate(), // Use UTC to avoid timezone issues (Usa UTC para evitar problemas de fuso horário)
-      elements,
-    }))
-    .sort((a, b) => a.elements[0].dt - b.elements[0].dt) // Sort the weather data by date (Ordena os dados do clima pela data)
-    .slice(0, days); // Limit the number of days to display (Limita o número de dias para exibição)
+      .map(([date, elements]) => ({
+        /**
+         * Extrai apenas o número do dia (UTC)
+         * Uso de UTC evita problemas de fuso horário
+         */
+        day: new Date(date + "T00:00:00Z").getUTCDate(),
+        elements,
+      }))
+      .sort((a, b) => a.elements[0].dt - b.elements[0].dt)
+      .slice(0, days);
 
-    setGroupedWeatherData(groupedWeatherArray); // Update the state with the grouped data (Atualiza o estado com os dados agrupados)
-  }, [data, days]);
+    setGroupedWeatherData(groupedWeatherArray);
+  }, [weatherData, days, data]);
 
   return (
-    <div className={styles.forecast__container}>
+    <section className={styles.forecast}>
       <DailyForecast
-        groupedWeatherData={groupedWeatherData} // Passes the grouped weather data to DailyForecast (Passa os dados do clima agrupados para o DailyForecast)
+        groupedWeatherData={groupedWeatherData}
         days={days}
         updateWeatherDetails={updateWeatherDetails}
+        timezoneOffset={timezoneOffset}
       />
-    </div>
+    </section>
   );
 }

@@ -6,7 +6,7 @@ import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
-    <div className={styles.home__container}>
+    <div >
       <Head>
         <title>JC Weather - Accurate Weather Forecast</title>
         <link rel="icon" href="/favicon.ico" />
@@ -42,10 +42,9 @@ export default function Home() {
         />
         <meta name="twitter:image" content="/weather-banner.png" />
       </Head>
-      <main className={styles.home__mainContainer}>
+      <main className={styles.home}>
         <WeatherDataFetcher />
       </main>
-      <Footer />
     </div>
   );
 }
