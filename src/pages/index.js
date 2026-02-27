@@ -2,13 +2,13 @@ import Head from "next/head";
 
 import styles from "@/styles/Home.module.css";
 import WeatherDataFetcher from "@/components/WeatherDataFetcher";
-import Footer from "@/components/Footer";
+
 
 export default function Home() {
   return (
     <div >
       <Head>
-        <title>JC Weather - Accurate Weather Forecast</title>
+        <title>JC Weather - Previsão do Tempo</title>
         <link rel="icon" href="/favicon.ico" />
         <meta
           name="description"

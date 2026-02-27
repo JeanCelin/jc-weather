@@ -53,7 +53,7 @@ export default function Search({
 
     navigator.geolocation.getCurrentPosition((position) => {
       const { latitude, longitude } = position.coords;
-      console.log("User coordinates:", latitude, longitude);
+   
       handleGetUserCoordinates(latitude, longitude);
     });
   };

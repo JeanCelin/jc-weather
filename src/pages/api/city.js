@@ -2,7 +2,7 @@ import axios from "axios";
 
 export default async function handler(req, res) {
   const { query } = req.query;
-  console.log(`query ${query}`);
+
   const key = process.env.OPENWEATHER_KEY;
 
   try {

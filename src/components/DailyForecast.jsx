@@ -101,7 +101,7 @@ export default function DailyForecast({
 
       {/* Lista de dias agrupados */}
       {groupedWeatherData.map((element) => {
-        console.log(element)
+       
         /**
          * 
          * Extração segura dos dados do dia
