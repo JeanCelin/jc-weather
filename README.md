@@ -84,7 +84,7 @@ The code for this project is freely available for modification and distribution.
 ---
 
 # JS Weather - Sistema de Previsão do Tempo
-**v1.0.3**
+**v1.1.0**
 
 ## 1. Introdução
 
