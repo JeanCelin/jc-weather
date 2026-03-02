@@ -17,8 +17,12 @@ export function useGetWeather() {
    */
   async function getWeather(lat = 51.5073509, lon = -0.1277583) {
     try {
+      // function sleep(ms) {
+      //   return new Promise((resolve) => setTimeout(resolve, ms));
+      // }
+      // await sleep(3000); // 10 segundos de atraso
       const response = await axios.get(
-        `/api/weather?lat=${lat}&lon=${lon}&lang=pt`
+        `/api/weather?lat=${lat}&lon=${lon}&lang=pt`,
       );
 
       return response.data;

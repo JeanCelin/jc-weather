@@ -88,6 +88,7 @@ export default function Forecast({ data, days = 5, updateWeatherDetails }) {
     setGroupedWeatherData(groupedWeatherArray);
   }, [weatherData, days, data]);
 
+
   return (
     <section className={styles.forecast}>
       <DailyForecast

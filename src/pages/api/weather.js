@@ -4,7 +4,7 @@ export default async function handler(req, res) {
   try {
     const { lat, lon, lang } = req.query;
     const key = process.env.OPENWEATHER_KEY;
-    console.log("KEY EXISTS?", !!process.env.OPENWEATHER_KEY);
+
     if (!lat || !lon || !lang || !key)
       throw new Error(`Erro nos parametros da API`);
     const response = await axios.get(

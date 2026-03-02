@@ -157,16 +157,15 @@ export default function WeatherDataFetcher() {
           </div>
 
           <div className={styles.main__forecast}>
-            {isPending ? (
+            {isPending && (
               <div className={styles.loadingOverlay}>
                 <div className={styles.loadingBox}>
                   <div className={styles.spinner}></div>
                   <p>Buscando previsão...</p>
                 </div>
               </div>
-            ) : (
-              data && <Forecast data={data} location={location} />
             )}
+            <Forecast data={data} location={location} />
           </div>
         </section>
       </section>

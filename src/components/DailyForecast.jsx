@@ -46,9 +46,9 @@ import {
 } from "lucide-react";
 
 export default function DailyForecast({
-  groupedWeatherData,
+  groupedWeatherData = [],
   updateWeatherDetails,
-  timezoneOffset
+  timezoneOffset,
 }) {
   /**
    * openDays
@@ -98,12 +98,18 @@ export default function DailyForecast({
         <Calendar size={16} color="var(--color3)" />
         <h2>PREVISÃO DIÁRIA</h2>
       </div>
+      {groupedWeatherData.length === 0 && (
+        <div className={styles.loadingOverlay}>
+          <div className={styles.loadingBox}>
+            <div className={styles.spinner}></div>
+            <p>Buscando previsão...</p>
+          </div>
+        </div>
+      )}
 
-      {/* Lista de dias agrupados */}
       {groupedWeatherData.map((element) => {
-       
         /**
-         * 
+         *
          * Extração segura dos dados do dia
          */
         const dataDaily = element?.elements[0];
@@ -114,7 +120,7 @@ export default function DailyForecast({
         /**
          * Ícone dinâmico baseado no código do clima
          */
-        const Icon = getWeatherIconById(weather.id);
+        const Icon = weather ? getWeatherIconById(weather.id) : null;
 
         /**
          * Abreviação do mês
