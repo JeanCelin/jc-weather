@@ -58,18 +58,32 @@ export default function WeatherDataFetcher() {
    * Carrega clima padrão (Brasília) ao montar componente
    * -------------------------------------------------------------
    */
+
+  const getLocalStorageCoordinates = () => {
+    const coordinates = localStorage.getItem("coordinates");
+
+    if (!coordinates) return null;
+
+    return JSON.parse(coordinates);
+  };
+
   useEffect(() => {
     async function fetchDefaultWeather() {
       try {
-        const response = await getWeather(-15.793889, -47.882778);
+        const coordinates = getLocalStorageCoordinates();
+
+        const response = coordinates
+          ? await getWeather(coordinates[0], coordinates[1])
+          : await getWeather();
 
         setData(response);
 
         setLocation({
-          name: "Brasília",
-          state: "DF",
-          country: "BR",
+          name: response.city.name,
+          state: response.city.state,
+          country: response.city.country,
         });
+        
       } catch (error) {
         setErrorMessage("Failed to fetch default weather.");
       }

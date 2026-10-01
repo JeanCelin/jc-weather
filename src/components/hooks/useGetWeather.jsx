@@ -15,7 +15,7 @@ export function useGetWeather() {
    * @param {number} lon - Longitude da localização
    * @returns {Promise<Object>} Dados meteorológicos retornados pela API
    */
-  async function getWeather(lat = 51.5073509, lon = -0.1277583) {
+  async function getWeather(lat = -15.793889, lon = -47.882778) {
     try {
       // function sleep(ms) {
       //   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -24,7 +24,8 @@ export function useGetWeather() {
       const response = await axios.get(
         `/api/weather?lat=${lat}&lon=${lon}&lang=pt`,
       );
-
+      const coordinates = [lat, lon];
+      localStorage.setItem("coordinates", JSON.stringify(coordinates));
       return response.data;
     } catch (error) {
       throw error;
